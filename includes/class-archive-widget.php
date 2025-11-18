@@ -178,5 +178,7 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                 echo '<p>' . __( 'No posts found.', 'eaw' ) . '</p>';
             }
         }
+
     }
 }
+
