@@ -1,0 +1,67 @@
+/* Basic styles for Archive Widget */
+.eaw-archive {
+  display: grid;
+  gap: var(--eaw-gap, 20px);
+}
+
+/* Grid */
+.eaw-grid {
+  grid-template-columns: repeat(var(--eaw-columns, 3), 1fr);
+}
+
+/* List */
+.eaw-list {
+  grid-template-columns: 1fr;
+}
+
+/* Masonry using CSS columns (simple, no JS dependency) */
+.eaw-masonry {
+  display: block;
+  column-count: var(--eaw-columns, 3);
+  column-gap: var(--eaw-gap, 20px);
+}
+.eaw-masonry .eaw-item {
+  display: inline-block;
+  width: 100%;
+  margin: 0 0 var(--eaw-gap,20px);
+  break-inside: avoid;
+}
+
+.eaw-item {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.eaw-thumb img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+.eaw-title {
+  margin: 10px 0 6px;
+  font-size: 18px;
+}
+
+.eaw-excerpt {
+  color: #555;
+  font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .eaw-grid { grid-template-columns: repeat(2, 1fr); }
+  .eaw-masonry { column-count: 2; }
+}
+@media (max-width: 600px) {
+  .eaw-grid { grid-template-columns: 1fr; }
+  .eaw-masonry { column-count: 1; }
+}
+
+/* Simple pagination styling */
+.eaw-pagination { margin-top: 20px; }
+.eaw-pagination .page-numbers { display: inline-block; padding: 8px 12px; margin-right: 6px; background:#f5f5f5; border-radius:4px; text-decoration:none; color:#333; }
+.eaw-pagination .current { background:#333; color:#fff; }
