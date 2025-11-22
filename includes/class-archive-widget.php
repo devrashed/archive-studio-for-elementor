@@ -48,7 +48,8 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                         'grid' => __( 'Grid Layout', 'eaw' ),
                         'list' => __( 'List Layout', 'eaw' ),
                         'masonry' => __( 'Masonry Layout', 'eaw' ),
-                        'portrait' => __( 'portrait Layout', 'eaw' ),
+                        'portrait' => __( 'Portrait Layout', 'eaw' ),
+                        'portraitcard' => __( 'Portrait Card Layout', 'eaw' ),
                     ],
                 ]
             );
@@ -89,7 +90,7 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                     'min' => 1,
                     'max' => 6,
                     'condition' => [
-                        'layout_type!' => 'portrait',
+                        'layout_type!' => [ 'portrait', 'portraitcard' ],
                     ],
                 ]
             );
@@ -103,11 +104,12 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                     'min' => 1,
                     'max' => 50,
                     'condition' => [
-                        'layout_type' => 'portrait',
+                        'layout_type' => [ 'portrait', 'portraitcard' ],
                     ],
                     'selectors' => [
-                        "{{WRAPPER}} .card" => 'margin-bottom: {{SIZE}}px;',
-                    ],
+                            "{{WRAPPER}} .card" => 'margin-bottom: {{SIZE}}px;',
+                             "{{WRAPPER}} .wcp_blog-card" => 'margin-bottom: {{SIZE}}px;',
+                        ],
                 ]
             );
 
@@ -255,15 +257,21 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                     ?>
                         <article class="card">
                             <div class="card-left">
-                                <div class="category-badge">
-                                    <?php
-                                    $categories = get_the_category();
-                                    if ( ! empty( $categories ) ) {
-                                        echo '<span>' . esc_html( $categories[0]->name ) . '</span>';
-                                    }
-                                    ?>
-                                </div>
-
+                                
+                                      <?php
+                                       $categories = get_the_category();
+                                        if ( ! empty( $categories ) ) : ?>
+                                            
+                                                <?php foreach ( $categories as $cat ) : ?>
+                                                <div class="category-badge">
+                                                    <a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
+                                                        <?php echo esc_html( $cat->name ); ?>
+                                                    </a>
+                                                </div>    
+                                                <?php endforeach; ?>
+                                            
+                                        <?php endif; ?>                                
+                           
                                 <a href="<?php the_permalink(); ?>">
                                     <?php if ( has_post_thumbnail() ) : ?>
                                         <img class="card-image" src="<?php the_post_thumbnail_url('medium'); ?>" alt="<?php the_title_attribute(); ?>">
@@ -281,7 +289,54 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                  <?php 
                     }                
 
-                }  
+                }  elseif ('portraitcard' === $layout){
+               
+                    while ( $query->have_posts() ) {
+                    $query->the_post();
+                    ?>
+                        <article class="wcp_blog-card">
+                            <div class="wcp_card-content">
+                                <h3 class="wcp_card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <div class="wcp_card-meta">
+                                    <span class="wcp_author"><?php the_author(); ?></span>
+                                    <span class="wcp_date"><?php the_time('F j, Y'); ?> </span>
+                                </div>
+
+                                 <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
+                                    <div class="wcp_card-excerpt">
+                                        <?php 
+                                        $content = apply_filters( 'the_content', get_the_content() );
+                                        $content = wp_strip_all_tags( $content );
+                                        echo wp_trim_words( $content, 50 );?></div>
+                                <?php endif; ?>
+
+                                <div class="wcp_card-tags">
+                                    <?php
+                                            $categories = get_the_category();
+                                            if ( ! empty( $categories ) ) : ?>
+                                                <span class="wcp_tag">
+                                                    <?php foreach ( $categories as $cat ) : ?>
+                                                        <a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
+                                                           <span class="wcp_tag_line"> # </span> <?php echo esc_html( $cat->name ); ?>
+                                                        </a>
+                                                    <?php endforeach; ?>
+                                                </span>
+                                            <?php endif; ?>                                    
+                                </div>
+                               
+                                <div class="wcp_read-more"><a href="<?php the_permalink(); ?>">Read More</a></div>
+                            </div>   
+                            
+                            <div class="wcp_card-image">
+                                    <?php if ( has_post_thumbnail() ) : ?>
+                                        <img src="<?php the_post_thumbnail_url('medium'); ?>" alt="<?php the_title_attribute(); ?>">
+                                    <?php endif; ?>
+                            </div>
+                        </article>  
+                 <?php 
+                    }                
+
+                }
 
 
 

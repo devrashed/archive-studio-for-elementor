@@ -241,6 +241,181 @@
 
 
 
+/* =======================================================
+          PORTRAIT BLOG CARD COMPONENT STYLES
+   ======================================================= */
+
+    .wcp_container 
+    {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+            
+    .wcp_blog-card {
+        display: flex;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        overflow: hidden;
+    }
+    
+    .wcp_card-content {
+        flex: 3;
+        padding: 20px;
+    }
+    
+    .wcp_card-image {
+        flex: 1;
+        background-color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;            
+    }
+    
+    .wcp_card-image img {
+        width: 65%;
+        height: 65% !important;
+        object-fit: cover;
+        border-radius: 10px !important;
+    }
+    
+    .wcp_card-title {
+        font-size: 24px;
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: #333;
+        text-decoration: none;
+    }
+    .wcp_card-title a{
+        text-decoration: none !important; 
+        color: inherit;
+    }
+    
+    .wcp_card-meta {
+        display: flex;
+        margin-bottom: 15px;
+        font-size: 14px;
+        color: #666;
+    }
+    
+    .wcp_author {
+        margin-right: 15px;
+        text-transform: capitalize;
+    }
+    
+    .wcp_date {
+        margin-right: 15px;
+    }
+    
+    .wcp_card-excerpt {
+        margin-bottom: 15px;
+        line-height: 1.5;
+    }
+    
+    .wcp_card-tags {
+        margin-bottom: 15px;
+        border-top: 1px solid #d4d3d3;
+        padding-top: 12px;
+    }
+    
+        .wcp_tag {
+        display: inline-block;
+        padding: 5px 10px;
+        margin-right: 8px;
+        margin-bottom: 8px;
+        font-size: 14px;
+        text-transform: capitalize;
+    }
+    
+    /* Link styles inside tags */
+    .wcp_tag a {
+        color: #555;
+        text-decoration: none !important;
+        transition: color 0.3s ease;
+    }
+    
+    /* Tag hover colors using nth-child approach */
+    .wcp_tag_line:nth-child(1){
+        color: #e74c3c; /* Red */
+    }
+
+    .wcp_tag_line:nth-child(2){
+        color: #3498db; /* Blue */
+    }
+    .wcp_tag_line:nth-child(3) {
+        color: #2ecc71; /* Green */
+    }
+    .wcp_tag_line:nth-child(4) {
+        color: #f39c12; /* Orange */
+    }
+    .wcp_tag_line:nth-child(5) {
+        color: #9b59b6; /* Purple */
+    }
+    .wcp_tag_line:nth-child(6) {
+        color: #1abc9c; /* Teal */
+    }
+    .wcp_tag_line:nth-child(7){
+        color: #34495e; /* Dark blue */
+    }
+    .wcp_tag_line:nth-child(8) {
+        color: #e67e22; /* Dark orange */
+    }
+    .wcp_tag_line:nth-child(9) {
+        color: #16a085; /* Dark teal */     
+    }    
+
+    .wcp_tag:nth-child(1) a:hover {
+        color: #e74c3c; /* Red */
+        text-decoration: none;
+    }
+    
+    .wcp_tag:nth-child(2) a:hover {
+        color: #3498db; /* Blue */
+    }
+    
+    .wcp_tag:nth-child(3) a:hover {
+        color: #2ecc71; /* Green */
+    }
+    
+    .wcp_tag:nth-child(4) a:hover {
+        color: #f39c12; /* Orange */
+    }
+    
+    .wcp_tag:nth-child(5) a:hover {
+        color: #9b59b6; /* Purple */
+    }
+    
+    .wcp_tag:nth-child(6) a:hover {
+        color: #1abc9c; /* Teal */
+    }
+    
+    .wcp_tag:nth-child(7) a:hover {
+        color: #34495e; /* Dark blue */
+    }
+    
+    .wcp_tag:nth-child(8) a:hover {
+        color: #e67e22; /* Dark orange */
+    }
+    
+    .wcp_tag:nth-child(9) a:hover {
+        color: #16a085; /* Dark teal */
+    }
+
+    .wcp_read-more {
+        font-size: 14px;
+        color: #888;
+        display: flex;
+        align-items: center;
+    }
+        .wcp_read-more a{
+        text-decoration: none !important;
+    }
+
+
+
+
 
 
 
