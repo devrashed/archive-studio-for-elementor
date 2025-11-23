@@ -46,7 +46,6 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                     'default' => 'grid',
                     'options' => [
                         'grid' => __( 'Grid Layout', 'eaw' ),
-                        'list' => __( 'List Layout', 'eaw' ),
                         'masonry' => __( 'Masonry Layout', 'eaw' ),
                         'portrait' => __( 'Portrait Layout', 'eaw' ),
                         'portraitcard' => __( 'Portrait Card Layout', 'eaw' ),
@@ -114,6 +113,55 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
             );
 
             $this->add_control(
+                'read_more',
+                [
+                    'label' => __( 'Read More', 'eaw' ),
+                    'type' => Controls_Manager::SWITCHER,
+                    'label_on' => 'Yes',
+                    'label_off' => 'No',
+                    'return_value' => 'yes',
+                    'default' => 'yes',
+                ]
+            );
+
+            $this->add_control(
+                'meta_category',
+                [
+                    'label' => __( 'Category', 'eaw' ),
+                    'type' => Controls_Manager::SWITCHER,
+                    'label_on' => 'Yes',
+                    'label_off' => 'No',
+                    'return_value' => 'yes',
+                    'default' => 'yes',
+                ]
+            );
+
+            $this->add_control(
+                'meta_date',
+                [
+                    'label' => __( 'Date', 'eaw' ),
+                    'type' => Controls_Manager::SWITCHER,
+                    'label_on' => 'Yes',
+                    'label_off' => 'No',
+                    'return_value' => 'yes',
+                    'default' => 'yes',
+                ]
+            );   
+
+             $this->add_control(
+                'meta_author',
+                [
+                    'label' => __( 'Author', 'eaw' ),
+                    'type' => Controls_Manager::SWITCHER,
+                    'label_on' => 'Yes',
+                    'label_off' => 'No',
+                    'return_value' => 'yes',
+                    'default' => 'yes',
+                ]
+            );   
+
+
+            $this->add_control(
                 'show_excerpt',
                 [
                     'label' => __( 'Show Excerpt', 'eaw' ),
@@ -125,27 +173,123 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                 ]
             );
 
-            $this->end_controls_section();
-
-            // Style tab: spacing
-            $this->start_controls_section(
-                'style_section',
-                [
-                    'label' => __( 'Style', 'eaw' ),
-                    'tab' => Controls_Manager::TAB_STYLE,
-                ]
-            );
-
             $this->add_control(
-                'gap',
+                'excerpt_length',
                 [
-                    'label' => __( 'Gap (px)', 'eaw' ),
-                    'type' => Controls_Manager::NUMBER,
+                    'label' => __( 'Excerpt Length', 'eaw' ),
+                    'type'  => Controls_Manager::NUMBER,
                     'default' => 20,
-                    'min' => 0,
-                    'max' => 100,
+                    'condition' => [
+                        'show_excerpt' => 'yes',
+                    ],
                 ]
             );
+
+
+            $this->end_controls_section();
+                // Style tab: spacing
+                $this->start_controls_section(
+                    'style_section',
+                    [
+                        'label' => __( 'Style', 'eaw' ),
+                        'tab'   => Controls_Manager::TAB_STYLE,
+                    ]
+                );
+
+                // Gap
+                $this->add_control(
+                    'gap',
+                    [
+                        'label'   => __( 'Gap (px)', 'eaw' ),
+                        'type'    => Controls_Manager::NUMBER,
+                        'default' => 20,
+                        'min'     => 0,
+                        'max'     => 100,
+                    ]
+                );
+
+                // Typography
+                $this->add_group_control(
+                    \Elementor\Group_Control_Typography::get_type(),
+                    [
+                        'name'     => 'wpcu_typography',
+                        'selector' => '{{WRAPPER}} .your-class',
+                    ]
+                );
+
+                // Text Shadow
+                $this->add_group_control(
+                    \Elementor\Group_Control_Text_Shadow::get_type(),
+                    [
+                        'name'     => 'wepcu_shadow',
+                        'selector' => '{{WRAPPER}} .your-class',
+                    ]
+                );
+
+
+                // --------------------------------------------
+                //          NORMAL & HOVER TABS
+                // --------------------------------------------
+
+                $this->start_controls_tabs( 'badge_style_tabs' );
+
+
+                // NORMAL TAB
+                $this->start_controls_tab(
+                    'badge_normal',
+                    [
+                        'label' => __( 'Normal', 'eaw' ),
+                    ]
+                );
+
+                $this->add_control(
+                    'badge_link_color_normal',
+                    [
+                        'label'     => __( 'Text Color', 'eaw' ),
+                        'type'      => Controls_Manager::COLOR,
+                        'selectors' => [
+                            '{{WRAPPER}} .category-badge a' => 'color: {{VALUE}};',
+                        ],
+                    ]
+                );
+
+                $this->end_controls_tab();
+
+
+                // HOVER TAB
+                $this->start_controls_tab(
+                    'badge_hover',
+                    [
+                        'label' => __( 'Hover', 'eaw' ),
+                    ]
+                );
+
+                $this->add_control(
+                    'badge_link_color_hover',
+                    [
+                        'label'     => __( 'Hover Text Color', 'eaw' ),
+                        'type'      => Controls_Manager::COLOR,
+                        'selectors' => [
+                            '{{WRAPPER}} .category-badge a:hover' => 'color: {{VALUE}};',
+                        ],
+                    ]
+                );
+
+                $this->add_control(
+                    'badge_transition_duration',
+                    [
+                        'label'     => __( 'Transition Duration (ms)', 'eaw' ),
+                        'type'      => Controls_Manager::NUMBER,
+                        'default'   => 300,
+                        'selectors' => [
+                            '{{WRAPPER}} .category-badge, {{WRAPPER}} .category-badge a' => 'transition: all {{VALUE}}ms;',
+                        ],
+                    ]
+                );
+
+                $this->end_controls_tab();
+                // END TABS
+                $this->end_controls_tabs();
 
             $this->end_controls_section();
         }
@@ -182,6 +326,11 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                 $gap = intval( $settings['gap'] );
                 $rowgap = intval( $settings['row_gap'] );
                 $page = esc_attr( $settings['pageination_style'] );
+                $wordlength = intval( $settings['excerpt_length'] );
+                $meta_cate = esc_attr( $settings['meta_category'] );
+                $meta_date = esc_attr( $settings['meta_date'] );
+                $meta_more = esc_attr( $settings['read_more'] );
+                $mata_author = esc_attr( $settings['meta_author'] );
 
                 if( 'grid' === $layout) {
 
@@ -197,10 +346,43 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                                     <div class="eaw-thumb"><?php the_post_thumbnail('medium'); ?></div>
                                 <?php endif; ?>
                                 <h3 class="eaw-title"><?php the_title(); ?></h3>
+
+                                <div class="eaw-meta"> 
+                                    <?php if ( 'yes' === $meta_cate ) : ?>      
+                                        <span class="eaw-category">
+                                        <?php
+                                            $categories = get_the_category();
+                                            if ( ! empty( $categories ) ) {
+                                                $cat_names = wp_list_pluck( $categories, 'name' );
+                                                echo esc_html( implode( ', ', $cat_names ) );
+                                            }
+                                        ?>
+                                    </span>   
+      
+                                     <?php endif; if ( 'yes' === $meta_date ) : ?>  
+
+                                    <span class="eaw-date">
+                                       <?php the_time('F j, Y'); ?> 
+                                    </span>  
+
+                                    <?php endif; ?>
+                                </div>
+
                             </a>
                             <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
-                                <div class="eaw-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 20 ); ?></div>
+                                <div class="eaw-excerpt">
+                                    <?php 
+                                        $content = apply_filters( 'the_content', get_the_content() );
+                                        $content = wp_strip_all_tags( $content );
+                                        echo wp_trim_words( $content, $wordlength );
+                                    ?>
+                            </div>
                             <?php endif; ?>
+                     
+                          <?php if ( 'yes' === $meta_more ) : ?>     
+                        <div class="eaw-meta-more"><a href="<?php the_permalink(); ?>">Read More</a></div>
+                            <?php endif; ?>
+
                         </article>
                         <?php
                     }
@@ -220,35 +402,38 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                                     <?php endif; ?>
                                     <h3 class="eaw-title"><?php the_title(); ?></h3>
                                 </a>
+
+                                <div class="eaw-meta">    
+                                 <?php if ( 'yes' === $meta_cate ) : ?>     
+                                    <span class="eaw-category">
+                                    <?php
+                                        $categories = get_the_category();
+                                        if ( ! empty( $categories ) ) {
+                                            $cat_names = wp_list_pluck( $categories, 'name' );
+                                            echo esc_html( implode( ', ', $cat_names ) );
+                                        }
+                                    ?>
+                                    </span>     
+                                    <?php endif; if ( 'yes' === $meta_date ) : ?>                               
+                                    <span class="eaw-date"> <?php the_time('F j, Y'); ?> </span>  
+                                    <?php endif; ?>  
+                                </div>            
+                                
                                 <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
-                                    <div class="eaw-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 20 ); ?></div>
+                                    <div class="eaw-excerpt"><?php 
+                                        $content = apply_filters( 'the_content', get_the_content() );
+                                        $content = wp_strip_all_tags( $content );
+                                        echo wp_trim_words( $content, $wordlength );
+                                    ?></div>
                                 <?php endif; ?>
+                                
+                                   <?php if ( 'yes' === $meta_more ) : ?> 
+                                <div class="eaw-meta-more"><a href="<?php the_permalink(); ?>">Read More</a></div>    
+                                    <?php endif; ?>
                             </article>
                             <?php
                         }           
-                    echo '</div>'; // .eaw-archive
-
-                } elseif('list' === $layout){  
-                      
-                echo '<div class="eaw-archive eaw-list" data-columns="' . $columns . '" style="--eaw-gap:' . $gap . 'px;">';
-
-                    while ( $query->have_posts() ) {
-                        $query->the_post();
-                        ?>
-                        <article class="eaw-item">
-                            <a class="eaw-link" href="<?php the_permalink(); ?>">
-                                <?php if ( has_post_thumbnail() ) : ?>
-                                    <div class="eaw-thumb"><?php the_post_thumbnail('medium'); ?></div>
-                                <?php endif; ?>
-                                <h3 class="eaw-title"><?php the_title(); ?></h3>
-                            </a>
-                            <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
-                                <div class="eaw-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 20 ); ?></div>
-                            <?php endif; ?>
-                        </article>
-                        <?php
-                    }  
-                echo '</div>'; // .eaw-archive    
+                    echo '</div>'; // .eaw-archive  
 
                 } elseif ('portrait' === $layout){
                
@@ -257,34 +442,51 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                     ?>
                         <article class="card">
                             <div class="card-left">
-                                
-                                      <?php
-                                       $categories = get_the_category();
-                                        if ( ! empty( $categories ) ) : ?>
-                                            
-                                                <?php foreach ( $categories as $cat ) : ?>
-                                                <div class="category-badge">
+                                    <?php 
+                                    if ( 'yes' === $meta_cate ) : 
+                                    $categories = get_the_category();
+                                    if ( ! empty( $categories ) ) : ?>
+                                        <div class="category-badge-wrapper">
+                                            <?php foreach ( $categories as $cat ) : ?>
+                                                <span class="category-badge">
                                                     <a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
                                                         <?php echo esc_html( $cat->name ); ?>
                                                     </a>
-                                                </div>    
-                                                <?php endforeach; ?>
-                                            
-                                        <?php endif; ?>                                
-                           
+                                                </span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    <?php endif; endif; ?>
                                 <a href="<?php the_permalink(); ?>">
                                     <?php if ( has_post_thumbnail() ) : ?>
                                         <img class="card-image" src="<?php the_post_thumbnail_url('medium'); ?>" alt="<?php the_title_attribute(); ?>">
-                                    <?php endif; ?>
-                                </a>
-                                
+                                    <?php endif;  ?>
+                                </a>                                                              
                             </div>
+
                             <div class="card-right">
                                 <h3 class="card-title"> <a href="<?php the_permalink(); ?>"> <?php the_title(); ?></a> </h3>
+
+                                <div class="card-meta">
+                                  <?php if ( 'yes' === $mata_author ) : ?>   
+                                    <span class="author"><?php the_author(); ?></span>
+                                  <?php endif; if ( 'yes' === $meta_date ) : ?>   
+                                    <span class="date"><?php the_time('F j, Y'); ?> </span>
+                                    <?php endif; ?>
+                                </div>
+
                                 <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
-                                    <div class="card-excerpt"><?php echo wp_trim_words( get_the_excerpt(), 20 ); ?></div>
+                                    <div class="card-excerpt">
+                                    <?php 
+                                        $content = apply_filters( 'the_content', get_the_content() );
+                                        $content = wp_strip_all_tags( $content );
+                                        echo wp_trim_words( $content, $wordlength );
+                                    ?></div>
                                 <?php endif; ?>
+                                   <?php if ( 'yes' === $meta_more ) : ?> 
+                              <div class="card_read-more"><a href="<?php the_permalink(); ?>">Read More</a></div>    
+                                   <?php endif; ?>
                             </div>      
+                           
                         </article>  
                  <?php 
                     }                
@@ -298,8 +500,11 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                             <div class="wcp_card-content">
                                 <h3 class="wcp_card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
                                 <div class="wcp_card-meta">
+                                 <?php if ( 'yes' === $mata_author ) : ?> 
                                     <span class="wcp_author"><?php the_author(); ?></span>
+                                    <?php endif; if ( 'yes' === $meta_date ) : ?>       
                                     <span class="wcp_date"><?php the_time('F j, Y'); ?> </span>
+                                    <?php endif; ?>
                                 </div>
 
                                  <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
@@ -307,9 +512,11 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                                         <?php 
                                         $content = apply_filters( 'the_content', get_the_content() );
                                         $content = wp_strip_all_tags( $content );
-                                        echo wp_trim_words( $content, 50 );?></div>
+                                        echo wp_trim_words( $content, $wordlength );
+                                         ?> </div>
                                 <?php endif; ?>
 
+                                <?php if ( 'yes' === $meta_cate ) : ?>                                      
                                 <div class="wcp_card-tags">
                                     <?php
                                             $categories = get_the_category();
@@ -323,8 +530,10 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                                                 </span>
                                             <?php endif; ?>                                    
                                 </div>
-                               
+                                <?php endif; ?>
+                                <?php if ( 'yes' === $mata_author ) : ?> 
                                 <div class="wcp_read-more"><a href="<?php the_permalink(); ?>">Read More</a></div>
+                                <?php endif; ?>
                             </div>   
                             
                             <div class="wcp_card-image">
@@ -337,12 +546,6 @@ if ( ! class_exists( 'EAW_Archive_Widget' ) ) {
                     }                
 
                 }
-
-
-
-
-
-
 
 
                 // Basic pagination (if not within main loop)
