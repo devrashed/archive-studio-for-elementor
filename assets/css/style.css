@@ -633,3 +633,9 @@
     }
 }
 
+/* Fix for Astra theme conflict */
+@media (min-width: 922px) {
+    .ast-narrow-container .site-content > .ast-container {
+        max-width: 1240px !important;
+    }
+}

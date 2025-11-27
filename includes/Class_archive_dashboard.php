@@ -134,9 +134,7 @@ Class Class_archive_dashboard {
                         <strong>Option Two</strong><br>
                         <small>Description for option two</small>
                     </label>
-
                 </div>
-
                 <?php submit_button('Save Settings', 'primary', 'layout_submit'); ?>
 
             </form>

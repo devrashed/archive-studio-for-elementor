@@ -17,11 +17,13 @@ class elementor_archive_widget {
 
     public function __construct() {
         new Class_archive_dashboard();
-
+        //add_filter('elementor/theme/use_theme_template', '__return_false');
         add_action( 'plugins_loaded', [ $this, 'check_elementor' ] );
         add_action( 'elementor/widgets/register', [ $this, 'register_widget' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets' ] );
-        add_filter( 'single_template', [$this, 'rk_event_organizer_single_template']);
+        //add_filter( 'single_template', [$this, 'rk_event_organizer_single_template']);
+        add_filter('template_include', [$this, 'rk_event_organizer_template_include'], 99);
+
     }
 
     /**
@@ -65,23 +67,43 @@ class elementor_archive_widget {
        
     }
 
-    public function rk_event_organizer_single_template( $single ) {
+
+    /* public function rk_event_organizer_single_template( $single ) {
+
         global $post;
-        $template = '';  
-        if ( $post->post_type == 'post' ) {
 
-            $selected_layout = get_option('layout_option', true);
+        if ( $post->post_type === 'post' ) {
 
-            if( 'layout_1' === $selected_layout){
-              $template = plugin_dir_path( __FILE__ ) . 'templates/single-layout-1.php';
-            }   
-            // If file exists, load it
-            if ( file_exists( $template ) ) {
-                return $template;
+            $selected_layout = get_option('layout_option');
+
+            if ( $selected_layout === 'layout_1' ) {
+                $template = plugin_dir_path(__FILE__) . 'templates/single-layout-1.php';
+
+                if ( file_exists($template) ) {
+                    return $template;
+                }
             }
         }
+
         return $single;
     }
+ */
+    public function rk_event_organizer_template_include( $template ) {
+        if ( is_singular('post') ) {
+
+            $selected_layout = get_option('layout_option');
+
+            if ($selected_layout === 'layout_1') {
+                $new_template = plugin_dir_path(__FILE__) . 'templates/single-layout-1.php';
+
+                if ( file_exists($new_template) ) {
+                    return $new_template;
+                }
+            }
+        }
+        return $template;
+    }
+
 
 }
 
