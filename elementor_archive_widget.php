@@ -4,7 +4,7 @@
  * Description: Elementor widget to design archive pages with Grid, List, or Masonry layout. Ready-to-install.
  * Version: 1.0
  * Author: Rashed khan
- * Text Domain: eaw
+ * Text Domain: wpcft-elementor-archive-widget
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,23 +13,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/Class_archive_dashboard.php';
 
-class elementor_archive_widget {
+class wpcft_elementor_archive_widget {
 
     public function __construct() {
         new Class_archive_dashboard();
-        //add_filter('elementor/theme/use_theme_template', '__return_false');
-        add_action( 'plugins_loaded', [ $this, 'check_elementor' ] );
-        add_action( 'elementor/widgets/register', [ $this, 'register_widget' ] );
-        add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets' ] );
-        //add_filter( 'single_template', [$this, 'rk_event_organizer_single_template']);
-        add_filter('template_include', [$this, 'rk_event_organizer_template_include'], 99);
+        add_action( 'plugins_loaded', [ $this, 'wpcft_check_elementor' ] );
+        add_action( 'elementor/widgets/register', [ $this, 'wpcft_register_widget' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'wpcft_enqueue_assets' ] );
+        add_filter( 'template_include', [$this, 'wpcft_event_organizer_template_include'], 99);
 
     }
 
     /**
      * Check Elementor is active
      */
-    public function check_elementor() {
+    public function wpcft_check_elementor() {
 
         if ( ! did_action( 'elementor/loaded' ) ) {
             add_action( 'admin_notices', function() {
@@ -45,50 +43,28 @@ class elementor_archive_widget {
     /**
      * Register Elementor Widget
      */
-    public function register_widget( $widgets_manager ) {
+    public function wpcft_register_widget( $widgets_manager ) {
 
         // Elementor active check
-        if ( ! $this->check_elementor() ) {
+        if ( ! $this->wpcft_check_elementor() ) {
             return;
         }
         require_once __DIR__ . '/includes/class-archive-widget.php';
         // Register widget
-        $widgets_manager->register( new \EAW_Archive_Widget() );
+        $widgets_manager->register( new \wpcft_Archive_Widget() );
     }
 
     /**
      * Enqueue plugin CSS & JS
      */
-    public function enqueue_assets() {
+    public function wpcft_enqueue_assets() {
 
         wp_enqueue_style('eaw-style', plugin_dir_url( __FILE__ ) . 'assets/css/style.css', array(), time(), false );
         wp_enqueue_style('single-style', plugin_dir_url( __FILE__ ) . 'assets/css/single_page.css', array(), time(), false);
         wp_register_script( 'eaw-script', plugin_dir_url( __FILE__ ) . 'assets/js/script.js', array('jquery'), time(), true);
        
     }
-
-
-    /* public function rk_event_organizer_single_template( $single ) {
-
-        global $post;
-
-        if ( $post->post_type === 'post' ) {
-
-            $selected_layout = get_option('layout_option');
-
-            if ( $selected_layout === 'layout_1' ) {
-                $template = plugin_dir_path(__FILE__) . 'templates/single-layout-1.php';
-
-                if ( file_exists($template) ) {
-                    return $template;
-                }
-            }
-        }
-
-        return $single;
-    }
- */
-    public function rk_event_organizer_template_include( $template ) {
+    public function wpcft_event_organizer_template_include( $template ) {
         if ( is_singular('post') ) {
 
             $selected_layout = get_option('layout_option');
@@ -104,8 +80,7 @@ class elementor_archive_widget {
         return $template;
     }
 
-
 }
 
 // Initialize the plugin
-new elementor_archive_widget();
+new wpcft_elementor_archive_widget();

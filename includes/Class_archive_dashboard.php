@@ -3,8 +3,6 @@
  * Dashboard layout
  *
  */ 
-
-
 Class Class_archive_dashboard {
  
     public function __construct() {

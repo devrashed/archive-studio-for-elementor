@@ -4,7 +4,6 @@
 
     <!-- Main Content -->
     <main class="wcp_single_main">
-
         <?php while ( have_posts() ) : the_post(); ?>
 
         <article class="wcp_single_article">
@@ -63,5 +62,6 @@
     </aside>
 
 </div>
+
 
 <?php get_footer(); ?>
