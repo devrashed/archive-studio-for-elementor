@@ -52,7 +52,7 @@ class wpcft_elementor_archive_studio {
         }
         require_once __DIR__ . '/includes/class-archive-widget.php';
         // Register widget
-        $widgets_manager->register( new \wpcft_Archive_Widget() );
+        $widgets_manager->register( new \wpcft_Archive_Studio() );
     }
 
     /**

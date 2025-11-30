@@ -190,7 +190,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                 $this->start_controls_section(
                     'style_section',
                     [
-                        'label' => __( 'Style', 'elementor-archive-studio' ),
+                        'label' => __( 'Title', 'elementor-archive-studio' ),
                         'tab'   => Controls_Manager::TAB_STYLE,
                     ]
                 );
@@ -200,19 +200,11 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                     \Elementor\Group_Control_Typography::get_type(),
                     [
                         'name'     => 'wpcu_typography',
-                        'selector' => '{{WRAPPER}} .your-class',
+                        'selector' => '{{WRAPPER}} .wf-post-title, {{WRAPPER}} .wf-card-title, {{WRAPPER}} .wf-archive-title 
+                                       {{WRAPPER}} .wf-archive-card-title',
                     ]
                 );
-
-                // Text Shadow
-                $this->add_group_control(
-                    \Elementor\Group_Control_Text_Shadow::get_type(),
-                    [
-                        'name'     => 'wepcu_shadow',
-                        'selector' => '{{WRAPPER}} .your-class',
-                    ]
-                );
-
+            
 
                 // --------------------------------------------
                 //          NORMAL & HOVER TABS
@@ -235,7 +227,10 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                         'label'     => __( 'Text Color', 'elementor-archive-studio' ),
                         'type'      => Controls_Manager::COLOR,
                         'selectors' => [
-                            '{{WRAPPER}} .category-badge a' => 'color: {{VALUE}};',
+                            '{{WRAPPER}} .wf-post-title a' => 'color: {{VALUE}};',
+                            '{{WRAPPER}} .wf-card-title a' => 'color: {{VALUE}};',
+                            '{{WRAPPER}} .wf-archive-card-title a' => 'color: {{VALUE}};',
+                            '{{WRAPPER}} .wf-archive-title a' => 'color: {{VALUE}};',
                         ],
                     ]
                 );
@@ -258,6 +253,11 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                         'type'      => Controls_Manager::COLOR,
                         'selectors' => [
                             '{{WRAPPER}} .category-badge a:hover' => 'color: {{VALUE}};',
+                            '{{WRAPPER}} .wf-post-title a:hover' => 'color: {{VALUE}};',
+                            '{{WRAPPER}} .wf-card-title a:hover' => 'color: {{VALUE}};',
+                            '{{WRAPPER}} .wf-archive-card-title a:hover' => 'color: {{VALUE}};',
+                            '{{WRAPPER}} .wf-archive-title a:hover' => 'color: {{VALUE}};',
+
                         ],
                     ]
                 );
@@ -279,6 +279,25 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                 $this->end_controls_tabs();
 
             $this->end_controls_section();
+
+                $this->start_controls_section(
+                    'description_style_section',
+                    [
+                        'label' => __( 'Description', 'elementor-archive-studio' ),
+                        'tab'   => Controls_Manager::TAB_STYLE,
+                    ]
+                );
+
+                // Typography for description
+                $this->add_group_control(
+                    \Elementor\Group_Control_Typography::get_type(),
+                    [
+                        'name'     => 'description_typography',
+                        'selector' => '{{WRAPPER}} .wf-archive-excerpt, {{WRAPPER}} .wf-archive-card-excerpt, {{WRAPPER}} .wf-card-excerpt, 
+                        {{WRAPPER}} .wf-post-excerpt',
+                    ]
+                );
+            $this->end_controls_section(); // End Description section    
         }
 
         protected function render() {
@@ -321,22 +340,21 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
 
                 if( 'grid' === $layout) {
 
-                    // Wrapper classes and inline css variables for columns/gap
-                    echo '<div class="eaw-archive eaw-grid" data-columns="' . $columns . '" style="--eaw-gap:' . $columns . 'px;">';
+                    echo '<div class="wf-archive-grid" data-columns="' . $columns . '" style="--eaw-gap:' . $columns . 'px;">';
 
                     while ( $query->have_posts() ) {
                         $query->the_post();
                         ?>
-                        <article class="eaw-item">
-                            <a class="eaw-link" href="<?php the_permalink(); ?>">
+                        <article class="wf-archive-item">
+                            <a class="wf-archive-link" href="<?php the_permalink(); ?>">
                                 <?php if ( has_post_thumbnail() ) : ?>
-                                    <div class="eaw-thumb"><?php the_post_thumbnail('medium'); ?></div>
+                                    <div class="wf-archive-thumb"><?php the_post_thumbnail('medium'); ?></div>
                                 <?php endif; ?>
-                                <h3 class="eaw-title"><?php the_title(); ?></h3>
+                                <h3 class="wf-archive-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 
-                                <div class="eaw-meta"> 
+                                <div class="wf-archive-meta"> 
                                     <?php if ( 'yes' === $meta_cate ) : ?>      
-                                        <span class="eaw-category">
+                                        <span class="wf-archive-category">
                                         <?php
                                             $categories = get_the_category();
                                             if ( ! empty( $categories ) ) {
@@ -346,7 +364,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                                         ?>
                                     </span>   
                                      <?php endif; if ( 'yes' === $meta_date ) : ?>  
-                                    <span class="eaw-date">
+                                    <span class="wf-archive-date">
                                         <?php echo get_the_date(); ?> 
                                     </span>  
                                     <?php endif; ?>
@@ -357,7 +375,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
 
                             </a>
                             <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
-                                <div class="eaw-excerpt">
+                                <div class="wf-archive-excerpt">
                                     <?php 
                                         $content = apply_filters( 'the_content', get_the_content() );
                                         $content = wp_strip_all_tags( $content );
@@ -365,10 +383,9 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                                     ?>
                             </div>
                             <?php endif; ?>
-                     
-                          <?php //if ( 'yes' === $meta_more ) : ?>     
+                       
                           <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
-                               <div class="eaw-meta-more"><a href="<?php the_permalink(); ?>">Read More</a></div>
+                               <div class="wf-archive-meta-more"><a href="<?php the_permalink(); ?>">Read More</a></div>
                           <?php endif; ?>
 
                         </article>
@@ -382,15 +399,15 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                     while ( $query->have_posts() ) {
                     $query->the_post();
                     ?>
-                        <article class="card">
-                            <div class="card-left">
+                        <article class="wf-archive-card">
+                            <div class="wf-archive-card-left">
                                     <?php 
                                     if ( 'yes' === $meta_cate ) : 
                                     $categories = get_the_category();
                                     if ( ! empty( $categories ) ) : ?>
-                                        <div class="category-badge-wrapper">
+                                        <div class="wf-archive-category-badge-wrapper">
                                             <?php foreach ( $categories as $cat ) : ?>
-                                                <span class="category-badge">
+                                                <span class="wf-archive-category-badge">
                                                     <a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
                                                         <?php echo esc_html( $cat->name ); ?>
                                                     </a>
@@ -400,14 +417,14 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                                     <?php endif; endif; ?>
                                 <a href="<?php the_permalink(); ?>">
                                     <?php if ( has_post_thumbnail() ) : ?>
-                                        <img class="card-image" src="<?php the_post_thumbnail_url('medium'); ?>" alt="<?php the_title_attribute(); ?>">
+                                        <img class="wf-archive-card-image" src="<?php the_post_thumbnail_url('medium'); ?>" alt="<?php the_title_attribute(); ?>">
                                     <?php endif;  ?>
                                 </a>                                                              
                             </div>
 
-                            <div class="card-right">
-                                <h3 class="card-title"> <a href="<?php the_permalink(); ?>"> <?php the_title(); ?></a> </h3>
-                                <div class="card-meta">
+                            <div class="wf-archive-card-right">
+                                <h3 class="wf-archive-card-title"> <a href="<?php the_permalink(); ?>"> <?php the_title(); ?></a> </h3>
+                                <div class="wf-archive-card-meta">
                                   <?php if ( 'yes' === $mata_author ) : ?>   
                                     <span class="author"><?php the_author(); ?></span>
                                   <?php endif; if ( 'yes' === $meta_date ) : ?>   
@@ -416,7 +433,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                                 </div>
 
                                 <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
-                                    <div class="card-excerpt">
+                                    <div class="wf-archive-card-excerpt">
                                     <?php 
                                         $content = apply_filters( 'the_content', get_the_content() );
                                         $content = wp_strip_all_tags( $content );
@@ -425,7 +442,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                                 <?php endif; ?>
                                    <?php //if ( 'yes' === $meta_more ) : ?> 
                                    <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
-                              <div class="card_read-more"><a href="<?php the_permalink(); ?>">Read More</a></div>    
+                              <div class="wf-archive-card_read-more"><a href="<?php the_permalink(); ?>">Read More</a></div>    
                                    <?php endif; ?>
                             </div>      
                            
@@ -438,19 +455,19 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                     while ( $query->have_posts() ) {
                     $query->the_post();
                     ?>
-                        <article class="wcp_blog-card">
-                            <div class="wcp_card-content">
-                                <h3 class="wcp_card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
-                                <div class="wcp_card-meta">
+                        <article class="wf-blog-card">
+                            <div class="wf-card-content">
+                                <h3 class="wf-card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <div class="wf-card-meta">
                                  <?php if ( 'yes' === $mata_author ) : ?> 
-                                    <span class="wcp_author"><?php the_author(); ?></span>
+                                    <span class="wf-author"><?php the_author(); ?></span>
                                     <?php endif; if ( 'yes' === $meta_date ) : ?>       
-                                    <span class="wcp_date"><?php echo get_the_date(); ?> </span>
+                                    <span class="wf-date"><?php echo get_the_date(); ?> </span>
                                     <?php endif; ?>
                                 </div>
 
                                  <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
-                                    <div class="wcp_card-excerpt">
+                                    <div class="wf-card-excerpt">
                                         <?php 
                                         $content = apply_filters( 'the_content', get_the_content() );
                                         $content = wp_strip_all_tags( $content );
@@ -459,14 +476,14 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                                 <?php endif; ?>
 
                                 <?php if ( 'yes' === $meta_cate ) : ?>                                      
-                                <div class="wcp_card-tags">
+                                <div class="wf-card-tags">
                                     <?php
                                             $categories = get_the_category();
                                             if ( ! empty( $categories ) ) : ?>
-                                                <span class="wcp_tag">
+                                                <span class="wf-tag">
                                                     <?php foreach ( $categories as $cat ) : ?>
                                                         <a href="<?php echo esc_url( get_category_link( $cat->term_id ) ); ?>">
-                                                           <span class="wcp_tag_line"> # </span> <?php echo esc_html( $cat->name ); ?>
+                                                           <span class="wf-tag_line"> # </span> <?php echo esc_html( $cat->name ); ?>
                                                         </a>
                                                     <?php endforeach; ?>
                                                 </span>
@@ -474,11 +491,11 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                                 </div>
                                 <?php endif; ?>
                                 <?php if ( 'yes' === $settings['show_excerpt'] ) : ?>
-                                <div class="wcp_read-more"><a href="<?php the_permalink(); ?>">Read More</a></div>
+                                <div class="wf-read-more"><a href="<?php the_permalink(); ?>">Read More</a></div>
                                 <?php endif; ?>
                             </div>   
                             
-                            <div class="wcp_card-image">
+                            <div class="wf-card-image">
                                     <?php if ( has_post_thumbnail() ) : ?>
                                         <img src="<?php the_post_thumbnail_url('medium'); ?>" alt="<?php the_title_attribute(); ?>">
                                     <?php endif; ?>
@@ -489,34 +506,34 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
 
                 } elseif ('custom-masonry' === $layout){ 
 
-                        echo '<div class="masonry-columns" style="column-gap:' . $columns . 'px;  margin-bottom:' . $columns . 'px;" >';
+                        echo '<div class="wf-masonry-columns" style="column-gap:' . $columns . 'px;  margin-bottom:' . $columns . 'px;" >';
                             while ( $query->have_posts() ) {
                                 $query->the_post();
                                 ?>
-                                <div class="masonry-item" style="margin-bottom: <?php echo $columns; ?>px;">
+                                <div class="wf-masonry-item" style="margin-bottom: <?php echo $columns; ?>px;">
                                     <?php if ( has_post_thumbnail() ) : ?>
-                                        <div class="featured-image-wrapper">
+                                        <div class="wf-featured-image-wrapper">
                                             <?php the_post_thumbnail('medium_large', array('class' => 'featured-image')); ?>
-                                            <div class="image-overlay"></div>
+                                            <div class="wf-image-overlay"></div>
                                             <?php 
                                             $categories = get_the_category();
                                             if ( ! empty( $categories ) ) {
-                                                echo '<span class="category-badge">' . esc_html( $categories[0]->name ) . '</span>';
+                                                echo '<span class="wf-category-badge">' . esc_html( $categories[0]->name ) . '</span>';
                                             }
                                             ?>
                                         </div>
                                     <?php endif; ?>
 
-                                    <div class="post-content">
-                                        <h3 class="post-title">
+                                    <div class="wf-post-content">
+                                        <h3 class="wf-post-title">
                                             <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
                                         </h3>
 
-                                        <div class="post-meta">
+                                        <div class="wf-post-meta">
                                             <?php echo get_the_date(); ?> • <?php the_author(); ?>
                                         </div>
 
-                                        <div class="post-excerpt">
+                                        <div class="wf-post-excerpt">
                                                <?php 
                                                     $content = apply_filters( 'the_content', get_the_content() );
                                                     $content = wp_strip_all_tags( $content );
@@ -601,7 +618,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                 wp_reset_postdata();
 
             } else {
-                echo '<p>' . __( 'No posts found.', 'eaw' ) . '</p>';
+                echo '<p>' . __( 'No posts found.', 'elementor-archive-studio' ) . '</p>';
             }
         }
 
