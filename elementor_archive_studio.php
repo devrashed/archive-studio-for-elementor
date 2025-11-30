@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/class_archive_dashboard.php';
 
-class wpcft_elementor_archive_widget {
+class wpcft_elementor_archive_studio {
 
     public function __construct() {
         new class_archive_dashboard();
@@ -85,4 +85,4 @@ class wpcft_elementor_archive_widget {
 }
 
 // Initialize the plugin
-new wpcft_elementor_archive_widget();
+new wpcft_elementor_archive_studio();

@@ -1,6 +1,12 @@
 /* ----------------------------------------------------
    Base Archive Widget Styles
 ---------------------------------------------------- */
+
+.eaw-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--eaw-columns, 3), 1fr);
+}
+
 .eaw-archive {
   display: grid;
   gap: var(--eaw-gap, 20px);
@@ -66,54 +72,9 @@
 /* ----------------------------------------------------
    GRID LAYOUT
 ---------------------------------------------------- */
-.eaw-grid {
-  display: grid;
-  grid-template-columns: repeat(var(--eaw-columns, 3), 1fr);
-}
 
 
-/* ----------------------------------------------------
-   MASONRY LAYOUT (CSS Columns)
----------------------------------------------------- */
-/* .eaw-masonry {
-  display: block;
-  column-count: var(--eaw-columns, 3);
-  column-gap: var(--eaw-gap, 20px);
-}
 
-.eaw-masonry .eaw-item {
-  display: inline-block;
-  width: 100%;
-  margin: 0 0 var(--eaw-gap, 20px);
-  break-inside: avoid;
-}
- */
-
- .eaw-masonry {
-  display: block;
-  column-count: var(--eaw-columns, 3);
-  column-gap: var(--eaw-gap, 20px);
-  width: 100%;
-}
-
-/* Masonry Items */
-.eaw-masonry .eaw-item {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: var(--eaw-gap, 20px);
-  break-inside: avoid-column;
-  -webkit-column-break-inside: avoid;
-  page-break-inside: avoid;
-}
-
-
-/* ----------------------------------------------------
-   LIST LAYOUT
----------------------------------------------------- */
-.eaw-list {
-  display: grid;
-  grid-template-columns: 1fr;
-}
 
 
 
