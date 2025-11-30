@@ -1,27 +1,29 @@
 <?php
 /**
- * Plugin Name: Elementor Archive Widget
- * Description: Elementor widget to design archive pages with Grid, List, or Masonry layout. Ready-to-install.
- * Version: 1.0
+ * Plugin Name: Elementor Archive Studio
+ * Description: Elementor widget to design archive pages with Grid, Masonry, Portrait layout and more design. Just install and Ready-to-USE.
+ * Requires at least: 5.3
  * Author: Rashed khan
- * Text Domain: wpcft-elementor-archive-widget
+ * Tested up to: 6.2
+ * Requires PHP: 7.4
+ * Version: 1.0
+ * Text Domain: elementor-archive-studio
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once plugin_dir_path( __FILE__ ) . 'includes/Class_archive_dashboard.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/class_archive_dashboard.php';
 
 class wpcft_elementor_archive_widget {
 
     public function __construct() {
-        new Class_archive_dashboard();
+        new class_archive_dashboard();
         add_action( 'plugins_loaded', [ $this, 'wpcft_check_elementor' ] );
         add_action( 'elementor/widgets/register', [ $this, 'wpcft_register_widget' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'wpcft_enqueue_assets' ] );
         add_filter( 'template_include', [$this, 'wpcft_event_organizer_template_include'], 99);
-
     }
 
     /**
@@ -44,7 +46,6 @@ class wpcft_elementor_archive_widget {
      * Register Elementor Widget
      */
     public function wpcft_register_widget( $widgets_manager ) {
-
         // Elementor active check
         if ( ! $this->wpcft_check_elementor() ) {
             return;
@@ -64,6 +65,7 @@ class wpcft_elementor_archive_widget {
         wp_register_script( 'eaw-script', plugin_dir_url( __FILE__ ) . 'assets/js/script.js', array('jquery'), time(), true);
        
     }
+
     public function wpcft_event_organizer_template_include( $template ) {
         if ( is_singular('post') ) {
 

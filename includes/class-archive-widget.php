@@ -13,7 +13,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
         }
 
         public function get_title() {
-            return __( 'Archive Layout', 'eaw' );
+            return __( 'Archive Layout', 'elementor-archive-studio' );
         }
 
         public function get_icon() {
@@ -33,7 +33,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
             $this->start_controls_section(
                 'layout_section',
                 [
-                    'label' => __( 'Layout Settings', 'eaw' ),
+                    'label' => __( 'Layout Settings', 'elementor-archive-studio' ),
                     'tab' => Controls_Manager::TAB_CONTENT,
                 ]
             );
@@ -41,14 +41,14 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
             $this->add_control(
                 'layout_type',
                 [
-                    'label' => __( 'Layout Type', 'eaw' ),
+                    'label' => __( 'Layout Type', 'elementor-archive-studio' ),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'grid',
                     'options' => [
-                        'grid' => __( 'Grid Layout', 'eaw' ),
-                        'portrait' => __( 'Portrait Layout', 'eaw' ),
-                        'portraitcard' => __( 'Portrait Card Layout', 'eaw' ),
-                        'custom-masonry' => __( 'Custom Masonry', 'eaw' ),
+                        'grid' => __( 'Grid Layout', 'elementor-archive-studio' ),
+                        'portrait' => __( 'Portrait Layout', 'elementor-archive-studio' ),
+                        'portraitcard' => __( 'Portrait Card Layout', 'elementor-archive-studio' ),
+                        'custom-masonry' => __( 'Custom Masonry', 'elementor-archive-studio' ),
                     ],
                 ]
             );
@@ -57,15 +57,15 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
             $this->add_control(
                 'pageination_style',
                 [
-                    'label' => __( 'Pagination Style', 'eaw' ),
+                    'label' => __( 'Pagination Style', 'elementor-archive-studio' ),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'numeric',
                     'options' => [
-                        'numeric' => __( 'Numeric style', 'eaw' ),
-                        'Load' => __( 'Load more', 'eaw' ),
-                        'select' => __( 'Select option', 'eaw' ),
-                        'infinite' => __( 'Infinite scroll', 'eaw' ),
-                        'nextprevious' => __( 'Next Previous', 'eaw' ),
+                        'numeric' => __( 'Numeric style', 'elementor-archive-studio' ),
+                        'Load' => __( 'Load more', 'elementor-archive-studio' ),
+                        'select' => __( 'Select option', 'elementor-archive-studio' ),
+                        'infinite' => __( 'Infinite scroll', 'elementor-archive-studio' ),
+                        'nextprevious' => __( 'Next Previous', 'elementor-archive-studio' ),
                     ],
                 ]
             );
@@ -73,7 +73,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
             $this->add_control(
                 'posts_per_page',
                 [
-                    'label' => __( 'Posts Per Page', 'eaw' ),
+                    'label' => __( 'Posts Per Page', 'elementor-archive-studio' ),
                     'type' => Controls_Manager::NUMBER,
                     'default' => 6,
                 ]
@@ -82,7 +82,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
             $this->add_control(
                 'columns',
                 [
-                    'label' => __( 'Columns (For Grid / Masonry)', 'eaw' ),
+                    'label' => __( 'Columns (For Grid / Masonry)', 'elementor-archive-studio' ),
                     'type' => Controls_Manager::NUMBER,
                     'default' => 20,
                     'min' => 1,
@@ -96,7 +96,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
             $this->add_control(
                 'row_gap',
                 [
-                    'label' => __( 'Row Gap', 'eaw' ),
+                    'label' => __( 'Row Gap', 'elementor-archive-studio' ),
                     'type' => Controls_Manager::NUMBER,
                     'default' => 20,
                     'min' => 1,
@@ -114,7 +114,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
             $this->add_control(
                 'read_more',
                 [
-                    'label' => __( 'Read More', 'eaw' ),
+                    'label' => __( 'Read More', 'elementor-archive-studio' ),
                     'type' => Controls_Manager::SWITCHER,
                     'label_on' => 'Yes',
                     'label_off' => 'No',
@@ -126,7 +126,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
             $this->add_control(
                 'meta_category',
                 [
-                    'label' => __( 'Category', 'eaw' ),
+                    'label' => __( 'Category', 'elementor-archive-studio' ),
                     'type' => Controls_Manager::SWITCHER,
                     'label_on' => 'Yes',
                     'label_off' => 'No',
@@ -138,7 +138,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
             $this->add_control(
                 'meta_date',
                 [
-                    'label' => __( 'Date', 'eaw' ),
+                    'label' => __( 'Date', 'elementor-archive-studio' ),
                     'type' => Controls_Manager::SWITCHER,
                     'label_on' => 'Yes',
                     'label_off' => 'No',
@@ -150,7 +150,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
              $this->add_control(
                 'meta_author',
                 [
-                    'label' => __( 'Author', 'eaw' ),
+                    'label' => __( 'Author', 'elementor-archive-studio' ),
                     'type' => Controls_Manager::SWITCHER,
                     'label_on' => 'Yes',
                     'label_off' => 'No',
@@ -175,7 +175,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
             $this->add_control(
                 'excerpt_length',
                 [
-                    'label' => __( 'Excerpt Length', 'eaw' ),
+                    'label' => __( 'Excerpt Length', 'elementor-archive-studio' ),
                     'type'  => Controls_Manager::NUMBER,
                     'default' => 20,
                     'condition' => [
@@ -190,7 +190,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
                 $this->start_controls_section(
                     'style_section',
                     [
-                        'label' => __( 'Style', 'eaw' ),
+                        'label' => __( 'Style', 'elementor-archive-studio' ),
                         'tab'   => Controls_Manager::TAB_STYLE,
                     ]
                 );
@@ -225,14 +225,14 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
                 $this->start_controls_tab(
                     'badge_normal',
                     [
-                        'label' => __( 'Normal', 'eaw' ),
+                        'label' => __( 'Normal', 'elementor-archive-studio' ),
                     ]
                 );
 
                 $this->add_control(
                     'badge_link_color_normal',
                     [
-                        'label'     => __( 'Text Color', 'eaw' ),
+                        'label'     => __( 'Text Color', 'elementor-archive-studio' ),
                         'type'      => Controls_Manager::COLOR,
                         'selectors' => [
                             '{{WRAPPER}} .category-badge a' => 'color: {{VALUE}};',
@@ -247,14 +247,14 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
                 $this->start_controls_tab(
                     'badge_hover',
                     [
-                        'label' => __( 'Hover', 'eaw' ),
+                        'label' => __( 'Hover', 'elementor-archive-studio' ),
                     ]
                 );
 
                 $this->add_control(
                     'badge_link_color_hover',
                     [
-                        'label'     => __( 'Hover Text Color', 'eaw' ),
+                        'label'     => __( 'Hover Text Color', 'elementor-archive-studio' ),
                         'type'      => Controls_Manager::COLOR,
                         'selectors' => [
                             '{{WRAPPER}} .category-badge a:hover' => 'color: {{VALUE}};',
@@ -265,7 +265,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
                 $this->add_control(
                     'badge_transition_duration',
                     [
-                        'label'     => __( 'Transition Duration (ms)', 'eaw' ),
+                        'label'     => __( 'Transition Duration (ms)', 'elementor-archive-studio' ),
                         'type'      => Controls_Manager::NUMBER,
                         'default'   => 300,
                         'selectors' => [
@@ -321,8 +321,8 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
 
                 if( 'grid' === $layout) {
 
-                // Wrapper classes and inline css variables for columns/gap
-                echo '<div class="eaw-archive eaw-grid" data-columns="' . $columns . '" style="--eaw-gap:' . $columns . 'px;">';
+                    // Wrapper classes and inline css variables for columns/gap
+                    echo '<div class="eaw-archive eaw-grid" data-columns="' . $columns . '" style="--eaw-gap:' . $columns . 'px;">';
 
                     while ( $query->have_posts() ) {
                         $query->the_post();
@@ -433,7 +433,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
                  <?php 
                     }                
 
-                }  elseif ('portraitcard' === $layout){
+                } elseif ('portraitcard' === $layout){
                
                     while ( $query->have_posts() ) {
                     $query->the_post();
@@ -487,7 +487,7 @@ if ( ! class_exists( 'wpcft_Archive_Widget' ) ) {
                  <?php 
                     }                
 
-                }  elseif ('custom-masonry' === $layout){ 
+                } elseif ('custom-masonry' === $layout){ 
 
                         echo '<div class="masonry-columns" style="column-gap:' . $columns . 'px;  margin-bottom:' . $columns . 'px;" >';
                             while ( $query->have_posts() ) {

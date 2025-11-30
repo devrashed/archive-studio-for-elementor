@@ -3,27 +3,26 @@
  * Dashboard layout
  *
  */ 
-Class Class_archive_dashboard {
+Class class_archive_dashboard {
  
-    public function __construct() {
-        
-        add_action( 'admin_menu', [ $this, 'register_archive_dashboard_menu' ] );
+    public function __construct() {        
+        add_action( 'admin_menu', [$this, 'wpcft_register_archive_dashboard_menu'] );
     }
    
-    public function register_archive_dashboard_menu() {
+    public function wpcft_register_archive_dashboard_menu() {
         add_menu_page(
-            'Archive Dashboard',
-            'Archive Dashboard',
+            'Archive Studio',
+            'Archive Studio',
             'manage_options',
-            'archive-dashboard',
-            [ $this, 'my_radio_settings_page' ],
+            'archive-studio',
+            [ $this, 'wpcft_archive_settings_page' ],
             'dashicons-archive',
             6
         );
     }
 
-    public function wpcar_archive_dashboard_page() {
-     ?>
+   /* public function wpcar_archive_dashboard_page() {
+      ?>
             <h1>Archive Dashboard</h1>
         <?php 
         // Save settings
@@ -63,10 +62,9 @@ Class Class_archive_dashboard {
             </form>
         </div>
         <?php
-    }
+    } */
 
-
-    public function my_radio_settings_page() {
+    public function wpcft_archive_settings_page() {
 
         // Save settings
         if ( isset($_POST['layout_submit']) ) {
