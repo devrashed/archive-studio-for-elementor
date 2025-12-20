@@ -21,49 +21,6 @@ Class class_archive_dashboard {
         );
     }
 
-   /* public function wpcar_archive_dashboard_page() {
-      ?>
-            <h1>Archive Dashboard</h1>
-        <?php 
-        // Save settings
-        if ( isset($_POST['my_radio_submit']) ) {
-            if ( isset($_POST['my_radio_option']) ) {
-                update_option('my_radio_option', sanitize_text_field($_POST['my_radio_option']));
-            }
-        }
-
-        // Get saved value
-        $selected = get_option('my_radio_option');
-        ?>
-        
-        <div class="wrap">
-            <h1>Radio Button Settings</h1>
-
-            <form method="post">
-                <table class="form-table">
-                    <tr>
-                        <th>Select Option:</th>
-                        <td>
-                            <label>
-                                <input type="radio" name="my_radio_option" value="option_1"
-                                    <?php checked($selected, 'option_1'); ?> />
-                                Layout One
-                            </label>
-                            <br>
-                            <label>
-                                <input type="radio" name="my_radio_option" value="option_2"
-                                    <?php checked($selected, 'option_2'); ?> />
-                                Layout Two
-                            </label>
-                        </td>
-                    </tr>
-                </table>
-                <?php submit_button('Save Settings', 'primary', 'my_radio_submit'); ?>
-            </form>
-        </div>
-        <?php
-    } */
-
     public function wpcft_archive_settings_page() {
 
         // Save settings
@@ -74,41 +31,6 @@ Class class_archive_dashboard {
         }
         $selected = get_option('layout_option', true);
         ?>
-
-        <style>
-            .layout-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
-                max-width: 500px;
-                margin-top: 20px;
-            }
-            .layout-card {
-                border: 2px solid #ccc;
-                padding: 20px;
-                border-radius: 10px;
-                cursor: pointer;
-                transition: 0.3s;
-                background: #fff;
-            }
-            .layout-card:hover {
-                border-color: #0073aa;
-            }
-
-            .layout-card input {
-                margin-right: 10px;
-            }
-            /* Highlight selected */
-            .layout-card.selected {
-                border-color: #0073aa;
-                background: #f0f8ff;
-            }
-            @media (max-width: 600px) {
-                .layout-grid {
-                    grid-template-columns: 1fr;
-                }
-            }
-        </style>
 
         <div class="wrap">
             <h1>Grid Radio Button Settings</h1>
@@ -148,7 +70,5 @@ Class class_archive_dashboard {
 
        <?php
     }
-
-
 
 }

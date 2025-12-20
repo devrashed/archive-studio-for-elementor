@@ -13,7 +13,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
         }
 
         public function get_title() {
-            return __( 'Archive Layout', 'elementor-archive-studio' );
+            return __( 'Archive Studio', 'archive-studio-for-elementor' );
         }
 
         public function get_icon() {
@@ -33,7 +33,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
             $this->start_controls_section(
                 'layout_section',
                 [
-                    'label' => __( 'Layout Settings', 'elementor-archive-studio' ),
+                    'label' => __( 'Layout Settings', 'archive-studio-for-elementor' ),
                     'tab' => Controls_Manager::TAB_CONTENT,
                 ]
             );
@@ -41,14 +41,15 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
             $this->add_control(
                 'layout_type',
                 [
-                    'label' => __( 'Layout Type', 'elementor-archive-studio' ),
+                    'label' => __( 'Layout Type', 'archive-studio-for-elementor' ),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'grid',
                     'options' => [
-                        'grid' => __( 'Grid Layout', 'elementor-archive-studio' ),
-                        'portrait' => __( 'Portrait Layout', 'elementor-archive-studio' ),
-                        'portraitcard' => __( 'Portrait Card Layout', 'elementor-archive-studio' ),
-                        'custom-masonry' => __( 'Custom Masonry', 'elementor-archive-studio' ),
+                        'grid' => __( 'Grid Layout', 'archive-studio-for-elementor' ),
+                        'masonry' => __( 'Masonry', 'archive-studio-for-elementor' ),
+                        'portrait' => __( 'Portrait Layout', 'archive-studio-for-elementor' ),
+                        'portraitcard' => __( 'Portrait Card Layout', 'archive-studio-for-elementor' ),
+                        
                     ],
                 ]
             );
@@ -57,15 +58,15 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
             $this->add_control(
                 'pageination_style',
                 [
-                    'label' => __( 'Pagination Style', 'elementor-archive-studio' ),
+                    'label' => __( 'Pagination Style', 'archive-studio-for-elementor' ),
                     'type' => Controls_Manager::SELECT,
                     'default' => 'numeric',
                     'options' => [
-                        'numeric' => __( 'Numeric style', 'elementor-archive-studio' ),
-                        'Load' => __( 'Load more', 'elementor-archive-studio' ),
-                        'select' => __( 'Select option', 'elementor-archive-studio' ),
-                        'infinite' => __( 'Infinite scroll', 'elementor-archive-studio' ),
-                        'nextprevious' => __( 'Next Previous', 'elementor-archive-studio' ),
+                        'numeric' => __( 'Numeric style', 'archive-studio-for-elementor' ),
+                        'Load' => __( 'Load more', 'archive-studio-for-elementor' ),
+                        'select' => __( 'Select option', 'archive-studio-for-elementor' ),
+                        'infinite' => __( 'Infinite scroll', 'archive-studio-for-elementor' ),
+                        'nextprevious' => __( 'Next Previous', 'archive-studio-for-elementor' ),
                     ],
                 ]
             );
@@ -73,7 +74,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
             $this->add_control(
                 'posts_per_page',
                 [
-                    'label' => __( 'Posts Per Page', 'elementor-archive-studio' ),
+                    'label' => __( 'Posts Per Page', 'archive-studio-for-elementor' ),
                     'type' => Controls_Manager::NUMBER,
                     'default' => 6,
                 ]
@@ -82,7 +83,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
             $this->add_control(
                 'columns',
                 [
-                    'label' => __( 'Columns (For Grid / Masonry)', 'elementor-archive-studio' ),
+                    'label' => __( 'Columns (For Grid / Masonry)', 'archive-studio-for-elementor' ),
                     'type' => Controls_Manager::NUMBER,
                     'default' => 20,
                     'min' => 1,
@@ -96,7 +97,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
             $this->add_control(
                 'row_gap',
                 [
-                    'label' => __( 'Row Gap', 'elementor-archive-studio' ),
+                    'label' => __( 'Row Gap', 'archive-studio-for-elementor' ),
                     'type' => Controls_Manager::NUMBER,
                     'default' => 20,
                     'min' => 1,
@@ -114,7 +115,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
             $this->add_control(
                 'read_more',
                 [
-                    'label' => __( 'Read More', 'elementor-archive-studio' ),
+                    'label' => __( 'Read More', 'archive-studio-for-elementor' ),
                     'type' => Controls_Manager::SWITCHER,
                     'label_on' => 'Yes',
                     'label_off' => 'No',
@@ -126,7 +127,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
             $this->add_control(
                 'meta_category',
                 [
-                    'label' => __( 'Category', 'elementor-archive-studio' ),
+                    'label' => __( 'Category', 'archive-studio-for-elementor' ),
                     'type' => Controls_Manager::SWITCHER,
                     'label_on' => 'Yes',
                     'label_off' => 'No',
@@ -138,7 +139,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
             $this->add_control(
                 'meta_date',
                 [
-                    'label' => __( 'Date', 'elementor-archive-studio' ),
+                    'label' => __( 'Date', 'archive-studio-for-elementor' ),
                     'type' => Controls_Manager::SWITCHER,
                     'label_on' => 'Yes',
                     'label_off' => 'No',
@@ -150,7 +151,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
              $this->add_control(
                 'meta_author',
                 [
-                    'label' => __( 'Author', 'elementor-archive-studio' ),
+                    'label' => __( 'Author', 'archive-studio-for-elementor' ),
                     'type' => Controls_Manager::SWITCHER,
                     'label_on' => 'Yes',
                     'label_off' => 'No',
@@ -163,7 +164,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
             $this->add_control(
                 'show_excerpt',
                 [
-                    'label' => __( 'Show Excerpt', 'eaw' ),
+                    'label' => __( 'Show Excerpt', 'archive-studio-for-elementor' ),
                     'type' => Controls_Manager::SWITCHER,
                     'label_on' => 'Yes',
                     'label_off' => 'No',
@@ -175,7 +176,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
             $this->add_control(
                 'excerpt_length',
                 [
-                    'label' => __( 'Excerpt Length', 'elementor-archive-studio' ),
+                    'label' => __( 'Excerpt Length', 'archive-studio-for-elementor' ),
                     'type'  => Controls_Manager::NUMBER,
                     'default' => 20,
                     'condition' => [
@@ -190,7 +191,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                 $this->start_controls_section(
                     'style_section',
                     [
-                        'label' => __( 'Title', 'elementor-archive-studio' ),
+                        'label' => __( 'Title', 'archive-studio-for-elementor' ),
                         'tab'   => Controls_Manager::TAB_STYLE,
                     ]
                 );
@@ -217,14 +218,14 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                 $this->start_controls_tab(
                     'badge_normal',
                     [
-                        'label' => __( 'Normal', 'elementor-archive-studio' ),
+                        'label' => __( 'Normal', 'archive-studio-for-elementor' ),
                     ]
                 );
 
                 $this->add_control(
                     'badge_link_color_normal',
                     [
-                        'label'     => __( 'Text Color', 'elementor-archive-studio' ),
+                        'label'     => __( 'Text Color', 'archive-studio-for-elementor' ),
                         'type'      => Controls_Manager::COLOR,
                         'selectors' => [
                             '{{WRAPPER}} .wf-post-title a' => 'color: {{VALUE}};',
@@ -242,14 +243,14 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                 $this->start_controls_tab(
                     'badge_hover',
                     [
-                        'label' => __( 'Hover', 'elementor-archive-studio' ),
+                        'label' => __( 'Hover', 'archive-studio-for-elementor' ),
                     ]
                 );
 
                 $this->add_control(
                     'badge_link_color_hover',
                     [
-                        'label'     => __( 'Hover Text Color', 'elementor-archive-studio' ),
+                        'label'     => __( 'Hover Text Color', 'archive-studio-for-elementor' ),
                         'type'      => Controls_Manager::COLOR,
                         'selectors' => [
                             '{{WRAPPER}} .category-badge a:hover' => 'color: {{VALUE}};',
@@ -265,7 +266,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                 $this->add_control(
                     'badge_transition_duration',
                     [
-                        'label'     => __( 'Transition Duration (ms)', 'elementor-archive-studio' ),
+                        'label'     => __( 'Transition Duration (ms)', 'archive-studio-for-elementor' ),
                         'type'      => Controls_Manager::NUMBER,
                         'default'   => 300,
                         'selectors' => [
@@ -283,7 +284,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                 $this->start_controls_section(
                     'description_style_section',
                     [
-                        'label' => __( 'Description', 'elementor-archive-studio' ),
+                        'label' => __( 'Description', 'archive-studio-for-elementor' ),
                         'tab'   => Controls_Manager::TAB_STYLE,
                     ]
                 );
@@ -297,7 +298,28 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                         {{WRAPPER}} .wf-post-excerpt',
                     ]
                 );
-            $this->end_controls_section(); // End Description section    
+            $this->end_controls_section(); // End Description section 
+            
+            
+            $this->end_controls_section();
+
+            $this->start_controls_section(
+                'meta_style_section',
+                [
+                    'label' => __( 'Meta', 'archive-studio-for-elementor' ),
+                    'tab'   => Controls_Manager::TAB_STYLE,
+                ]
+            );
+
+            // Typography for description
+            $this->add_group_control(
+                \Elementor\Group_Control_Typography::get_type(),
+                [
+                    'name'     => 'meta_typography',
+                    'selector' => '{{WRAPPER}} .wf-post-meta, {{WRAPPER}} .wf-card-meta, {{WRAPPER}} .wf-archive-meta, {{WRAPPER}} .wf-archive-card-meta',
+                ]
+            );
+            $this->end_controls_section(); // End Meta section 
         }
 
         protected function render() {
@@ -504,7 +526,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                  <?php 
                     }                
 
-                } elseif ('custom-masonry' === $layout){ 
+                } elseif ('masonry' === $layout){ 
 
                         echo '<div class="wf-masonry-columns" style="column-gap:' . $columns . 'px;  margin-bottom:' . $columns . 'px;" >';
                             while ( $query->have_posts() ) {
@@ -517,9 +539,9 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                                             <div class="wf-image-overlay"></div>
                                             <?php 
                                             $categories = get_the_category();
-                                            if ( ! empty( $categories ) ) {
-                                                echo '<span class="wf-category-badge">' . esc_html( $categories[0]->name ) . '</span>';
-                                            }
+                                                if ( ! empty( $categories ) ) {
+                                                    echo '<span class="wf-category-badge">' . esc_html( $categories[0]->name ) . '</span>';
+                                                }
                                             ?>
                                         </div>
                                     <?php endif; ?>
@@ -618,7 +640,7 @@ if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
                 wp_reset_postdata();
 
             } else {
-                echo '<p>' . __( 'No posts found.', 'elementor-archive-studio' ) . '</p>';
+                echo '<p>' . __( 'No posts found.', 'archive-studio-for-elementor' ) . '</p>';
             }
         }
 

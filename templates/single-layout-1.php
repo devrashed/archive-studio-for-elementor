@@ -8,13 +8,6 @@
 
         <article class="wcp_single_article">
 
-            <!-- Featured Image -->
-            <?php if ( has_post_thumbnail() ) : ?>
-                <div class="wcp_single_featured">
-                    <?php the_post_thumbnail('large'); ?>
-                </div>
-            <?php endif; ?>
-
             <!-- Title -->
             <h1 class="wcp_single_title"><?php the_title(); ?></h1>
 
@@ -22,7 +15,26 @@
             <div class="wcp_single_meta">
                 <span class="wcp_single_author"><?php the_author(); ?></span>
                 <span class="wcp_single_date"><?php echo get_the_date(); ?></span>
+                <div class="wcp_single_categories">
+                    <?php 
+                    $categories = get_the_category();
+                    if($categories){
+                        foreach($categories as $category) {
+                            $color = get_term_meta($category->term_id, 'category_color', true);
+                            $style = $color ? 'style="background-color:'.$color.'"' : '';
+                            echo '<a href="'.get_category_link($category->term_id).'" class="category-item" '.$style.'>'.$category->cat_name.'</a>';
+                        }
+                    }
+                    ?>
+                </div>
             </div>
+             
+            <!-- Featured Image -->
+            <?php if ( has_post_thumbnail() ) : ?>
+                <div class="wcp_single_featured">
+                    <?php the_post_thumbnail('large'); ?>
+                </div>
+            <?php endif; ?>
 
             <!-- Content -->
             <div class="wcp_single_content">
@@ -62,6 +74,5 @@
     </aside>
 
 </div>
-
 
 <?php get_footer(); ?>

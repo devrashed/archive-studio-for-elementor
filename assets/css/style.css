@@ -29,7 +29,7 @@
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 6px;
+  border-radius: 10px;
   aspect-ratio: 4/3;
   object-fit: fill;
 }
@@ -68,6 +68,41 @@
 }
 .wf-archive-meta-more a{
     text-decoration: none !important;
+}
+
+/* =========== Layout ============= */
+
+.layout-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 500px;
+    margin-top: 20px;
+}
+.layout-card {
+    border: 2px solid #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    background: #fff;
+}
+.layout-card:hover {
+    border-color: #0073aa;
+}
+
+.layout-card input {
+    margin-right: 10px;
+}
+/* Highlight selected */
+.layout-card.selected {
+    border-color: #0073aa;
+    background: #f0f8ff;
+}
+@media (max-width: 600px) {
+    .layout-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 

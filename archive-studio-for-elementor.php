@@ -1,14 +1,17 @@
 <?php
 /**
- * Plugin Name: Elementor Archive Studio
+ * Plugin Name: Archive Studio Elementor
  * Description: Elementor widget to design archive pages with Grid, Masonry, Portrait layout and more design. Just install and Ready-to-USE.
- * Requires at least: 5.3
- * Author: Rashed khan
- * Tested up to: 6.2
+ * Requires at least: 5.4
+ * Author: Rashed Khan
+ * Tested up to: 6.9
  * Requires PHP: 7.4
- * Version: 1.0
- * Text Domain: elementor-archive-studio
+ * Version: 1.0.2
+ * Text Domain: archive-studio-for-elementor
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
+
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
