@@ -4,12 +4,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 
-if ( ! class_exists( 'wpcft_Archive_Studio' ) ) {
+if ( ! class_exists( 'archstel_Archive_Studio' ) ) {
 
-    class wpcft_Archive_Studio extends Widget_Base {
+    class archstel_Archive_Studio extends Widget_Base {
 
         public function get_name() {
-            return 'wpcft_Archive_Studio';
+            return 'archstel_Archive_Studio';
         }
 
         public function get_title() {

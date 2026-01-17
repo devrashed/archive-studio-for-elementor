@@ -6,22 +6,22 @@
 Class class_archive_dashboard {
  
     public function __construct() {        
-        add_action( 'admin_menu', [$this, 'wpcft_register_archive_dashboard_menu'] );
+        add_action( 'admin_menu', [$this, 'archstel_register_archive_dashboard_menu'] );
     }
    
-    public function wpcft_register_archive_dashboard_menu() {
+    public function archstel_register_archive_dashboard_menu() {
         add_menu_page(
             'Archive Studio',
             'Archive Studio',
             'manage_options',
             'archive-studio',
-            [ $this, 'wpcft_archive_settings_page' ],
+            [ $this, 'archstel_archive_settings_page' ],
             'dashicons-archive',
             6
         );
     }
 
-    public function wpcft_archive_settings_page() {
+    public function archstel_archive_settings_page() {
 
         // Save settings
         if ( isset($_POST['layout_submit']) ) {
@@ -58,13 +58,7 @@ Class class_archive_dashboard {
             </form>
 
             <script>
-                // Add selected class when clicking
-                document.querySelectorAll('.layout-card input').forEach(function(el) {
-                    el.addEventListener('change', function() {
-                        document.querySelectorAll('.layout-card').forEach(c => c.classList.remove('selected'));
-                        el.closest('.layout-card').classList.add('selected');
-                    });
-                });
+               
             </script>
         </div>
 

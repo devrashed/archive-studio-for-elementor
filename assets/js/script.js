@@ -8,3 +8,13 @@
         });
     });
 })(jQuery);
+
+
+
+ // Add selected class when clicking
+    document.querySelectorAll('.layout-card input').forEach(function(el) {
+        el.addEventListener('change', function() {
+            document.querySelectorAll('.layout-card').forEach(c => c.classList.remove('selected'));
+            el.closest('.layout-card').classList.add('selected');
+        });
+    });

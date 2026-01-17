@@ -6,7 +6,7 @@
  * Author: Rashed Khan
  * Tested up to: 6.9
  * Requires PHP: 7.4
- * Version: 1.0.2
+ * Version: 1.0.3
  * Text Domain: archive-studio-for-elementor
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -19,21 +19,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once plugin_dir_path( __FILE__ ) . 'includes/class_archive_dashboard.php';
 
+include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+
+if ( ! is_plugin_active( 'elementor/elementor.php' ) ) {
+    deactivate_plugins( plugin_basename( __FILE__ ) );
+    add_action( 'admin_notices', function() {
+        echo '<div class="notice notice-error is-dismissible">';
+        echo '<p><strong>Archive Studio Elementor:</strong> This plugin cannot be installed because <a href="https://wordpress.org/plugins/elementor/" target="_blank">Elementor</a> is not active. This plugin has been deactivated.</p>';
+        echo '</div>';
+    } );
+    return;
+}
+
+
 class wpcft_elementor_archive_studio {
 
     public function __construct() {
         new class_archive_dashboard();
-        add_action( 'plugins_loaded', [ $this, 'wpcft_check_elementor' ] );
-        add_action( 'elementor/widgets/register', [ $this, 'wpcft_register_widget' ] );
-        add_action( 'wp_enqueue_scripts', [ $this, 'wpcft_enqueue_assets' ] );
-        add_filter( 'template_include', [$this, 'wpcft_event_organizer_template_include'], 99);
+        add_action( 'plugins_loaded', [ $this, 'archstel_check_elementor' ] );
+        add_action( 'elementor/widgets/register', [ $this, 'archstel_register_widget' ] );
+        add_action( 'wp_enqueue_scripts', [ $this, 'archstel_enqueue_assets' ] );
+        add_filter( 'template_include', [$this, 'archstel_event_organizer_template_include'], 99);
     }
 
     /**
      * Check Elementor is active
      */
-    public function wpcft_check_elementor() {
-
+    public function archstel_check_elementor() {
         if ( ! did_action( 'elementor/loaded' ) ) {
             add_action( 'admin_notices', function() {
                 if ( current_user_can( 'activate_plugins' ) ) {
@@ -48,20 +60,20 @@ class wpcft_elementor_archive_studio {
     /**
      * Register Elementor Widget
      */
-    public function wpcft_register_widget( $widgets_manager ) {
+    public function archstel_register_widget( $widgets_manager ) {
         // Elementor active check
-        if ( ! $this->wpcft_check_elementor() ) {
+        if ( ! $this->archstel_check_elementor() ) {
             return;
         }
         require_once __DIR__ . '/includes/class-archive-widget.php';
         // Register widget
-        $widgets_manager->register( new \wpcft_Archive_Studio() );
+        $widgets_manager->register( new \archstel_Archive_Studio() );
     }
 
     /**
      * Enqueue plugin CSS & JS
      */
-    public function wpcft_enqueue_assets() {
+    public function archstel_enqueue_assets() {
 
         wp_enqueue_style('eaw-style', plugin_dir_url( __FILE__ ) . 'assets/css/style.css', array(), time(), false );
         wp_enqueue_style('single-style', plugin_dir_url( __FILE__ ) . 'assets/css/single_page.css', array(), time(), false);
@@ -69,7 +81,7 @@ class wpcft_elementor_archive_studio {
        
     }
 
-    public function wpcft_event_organizer_template_include( $template ) {
+    public function archstel_event_organizer_template_include( $template ) {
         if ( is_singular('post') ) {
 
             $selected_layout = get_option('layout_option');
