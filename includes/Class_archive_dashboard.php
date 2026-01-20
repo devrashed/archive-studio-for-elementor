@@ -24,11 +24,15 @@ Class class_archive_dashboard {
     public function archstel_archive_settings_page() {
 
         // Save settings
-        if ( isset($_POST['layout_submit']) ) {
+    
             if ( isset($_POST['layout_option']) ) {
-                update_option('layout_option', sanitize_text_field($_POST['layout_option']));
+                update_option(
+                    'layout_option',
+                    sanitize_text_field( wp_unslash( $_POST['layout_option'] ) )
+                );
+
             }
-        }
+
         $selected = get_option('layout_option', true);
         ?>
 

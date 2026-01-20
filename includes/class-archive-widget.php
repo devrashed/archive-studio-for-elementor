@@ -4,12 +4,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 
-if ( ! class_exists( 'archstel_Archive_Studio' ) ) {
+if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
 
-    class archstel_Archive_Studio extends Widget_Base {
+    class Alass_Archive_Widget extends Widget_Base {
 
         public function get_name() {
-            return 'archstel_Archive_Studio';
+            return 'Alass_Archive_Widget';
         }
 
         public function get_title() {
@@ -401,7 +401,7 @@ if ( ! class_exists( 'archstel_Archive_Studio' ) ) {
                                     <?php 
                                         $content = apply_filters( 'the_content', get_the_content() );
                                         $content = wp_strip_all_tags( $content );
-                                        echo wp_trim_words( $content, $wordlength );
+                                        echo esc_html( wp_trim_words( $content, absint( $wordlength ) ) );
                                     ?>
                             </div>
                             <?php endif; ?>
@@ -459,7 +459,7 @@ if ( ! class_exists( 'archstel_Archive_Studio' ) ) {
                                     <?php 
                                         $content = apply_filters( 'the_content', get_the_content() );
                                         $content = wp_strip_all_tags( $content );
-                                        echo wp_trim_words( $content, $wordlength );
+                                        echo esc_html( wp_trim_words( $content, absint( $wordlength ) ) );
                                     ?></div>
                                 <?php endif; ?>
                                    <?php //if ( 'yes' === $meta_more ) : ?> 
@@ -493,7 +493,7 @@ if ( ! class_exists( 'archstel_Archive_Studio' ) ) {
                                         <?php 
                                         $content = apply_filters( 'the_content', get_the_content() );
                                         $content = wp_strip_all_tags( $content );
-                                        echo wp_trim_words( $content, $wordlength );
+                                        echo esc_html( wp_trim_words( $content, absint( $wordlength ) ) );
                                          ?> </div>
                                 <?php endif; ?>
 
@@ -559,7 +559,7 @@ if ( ! class_exists( 'archstel_Archive_Studio' ) ) {
                                                <?php 
                                                     $content = apply_filters( 'the_content', get_the_content() );
                                                     $content = wp_strip_all_tags( $content );
-                                                    echo wp_trim_words( $content, $wordlength );
+                                                    echo esc_html( wp_trim_words( $content, absint( $wordlength ) ) );
                                                 ?>    
                                         </div>
                                     </div>
@@ -574,7 +574,7 @@ if ( ! class_exists( 'archstel_Archive_Studio' ) ) {
 
                 
                 // Basic pagination (if not within main loop)
-                if ( 'numeric' === $page ) {
+                /* if ( 'numeric' === $page ) {
 
                         $big = 999999999;
                         echo '<div class="eaw-pagination">';
@@ -637,7 +637,92 @@ if ( ! class_exists( 'archstel_Archive_Studio' ) ) {
                         }
                     }
 
+                wp_reset_postdata(); */
+
+                if ( 'numeric' === $page ) {
+
+                    $big = 999999999;
+
+                    echo '<div class="eaw-pagination">';
+                    echo wp_kses_post(
+                        paginate_links(
+                            array(
+                                'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
+                                'format'    => '?paged=%#%',
+                                'current'   => absint( $paged ),
+                                'total'     => absint( $query->max_num_pages ),
+                                'prev_text' => esc_html__( '« Previous', 'eaw' ),
+                                'next_text' => esc_html__( 'Next »', 'eaw' ),
+                            )
+                        )
+                    );
+                    echo '</div>';
+
+                } elseif ( 'nextprevious' === $page ) {
+
+                    echo '<div class="eaw-pagination eaw-prev-next">';
+
+                    $prev_link = get_previous_posts_link( esc_html__( '« Previous', 'eaw' ) );
+                    $next_link = get_next_posts_link( esc_html__( 'Next »', 'eaw' ), $query->max_num_pages );
+
+                    if ( $prev_link ) {
+                        echo '<span class="eaw-prev">' . wp_kses_post( $prev_link ) . '</span>';
+                    }
+
+                    if ( $next_link ) {
+                        echo '<span class="eaw-next">' . wp_kses_post( $next_link ) . '</span>';
+                    }
+
+                    echo '</div>';
+
+                } elseif ( 'load' === $page ) {
+
+                    $total_pages = absint( $query->max_num_pages );
+
+                    if ( $paged < $total_pages ) {
+                        echo '<div class="eaw-load-more">';
+                        echo '<a class="eaw-loadmore-btn" href="' . esc_url( get_pagenum_link( $paged + 1 ) ) . '">';
+                        echo esc_html__( 'Load More', 'eaw' );
+                        echo '</a>';
+                        echo '</div>';
+                    }
+
+                } elseif ( 'select' === $page ) {
+
+                    $total_pages = absint( $query->max_num_pages );
+
+                    if ( $total_pages > 1 ) {
+                        echo '<div class="eaw-select-pagination">';
+                        echo '<select class="eaw-page-select">';
+
+                        for ( $i = 1; $i <= $total_pages; $i++ ) {
+                            printf(
+                                '<option value="%s"%s>%s</option>',
+                                esc_url( get_pagenum_link( $i ) ),
+                                selected( $paged, $i, false ),
+                                esc_html( sprintf( __( 'Page %d', 'eaw' ), $i ) )
+                            );
+                        }
+
+                        echo '</select>';
+                        echo '</div>';
+                    }
+
+                } elseif ( 'infinite' === $page ) {
+
+                    $total_pages = absint( $query->max_num_pages );
+
+                    if ( $paged < $total_pages ) {
+                        echo '<div class="eaw-infinite-scroll" data-next-page="' . esc_url( get_pagenum_link( $paged + 1 ) ) . '">';
+                        echo '<span class="eaw-loading-message">';
+                        echo esc_html__( 'Scroll down to load more...', 'eaw' );
+                        echo '</span>';
+                        echo '</div>';
+                    }
+                }
+
                 wp_reset_postdata();
+
 
             } else {
                 echo '<p>' . __( 'No posts found.', 'archive-studio-for-elementor' ) . '</p>';
@@ -646,4 +731,3 @@ if ( ! class_exists( 'archstel_Archive_Studio' ) ) {
 
     }
 }
-

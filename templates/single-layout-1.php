@@ -1,4 +1,12 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Single Post Layout 1 Template
+ *
+ * @package Archive_Studio_For_Elementor
+ */
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+get_header(); ?>
 
 <div class="wcp_single_container">
 
@@ -14,15 +22,15 @@
             <!-- Meta -->
             <div class="wcp_single_meta">
                 <span class="wcp_single_author"><?php the_author(); ?></span>
-                <span class="wcp_single_date"><?php echo get_the_date(); ?></span>
+                <span class="wcp_single_date"><?php echo esc_html( get_the_date() ); ?></span>
                 <div class="wcp_single_categories">
                     <?php 
                     $categories = get_the_category();
-                    if($categories){
-                        foreach($categories as $category) {
-                            $color = get_term_meta($category->term_id, 'category_color', true);
-                            $style = $color ? 'style="background-color:'.$color.'"' : '';
-                            echo '<a href="'.get_category_link($category->term_id).'" class="category-item" '.$style.'>'.$category->cat_name.'</a>';
+                    if ( $categories ) {
+                        foreach ( $categories as $category ) {
+                            $color = get_term_meta( $category->term_id, 'category_color', true );
+                            $style = $color ? 'style="background-color:' . esc_attr( $color ) . '"' : '';
+                            echo '<a href="' . esc_url( get_category_link( $category->term_id ) ) . '" class="category-item" ' . $style . '>' . esc_html( $category->cat_name ) . '</a>';
                         }
                     }
                     ?>
@@ -32,7 +40,7 @@
             <!-- Featured Image -->
             <?php if ( has_post_thumbnail() ) : ?>
                 <div class="wcp_single_featured">
-                    <?php the_post_thumbnail('large'); ?>
+                    <?php the_post_thumbnail( 'large' ); ?>
                 </div>
             <?php endif; ?>
 
@@ -43,17 +51,17 @@
 
             <!-- Tags -->
             <div class="wcp_single_tags">
-                <?php the_tags('<strong>Tags:</strong> ', ''); ?>
+                <?php the_tags( '<strong>' . esc_html__( 'Tags:', 'archive-studio-for-elementor' ) . '</strong> ', '' ); ?>
             </div>
 
             <!-- Author Box -->
             <div class="wcp_author_box">
                 <div class="wcp_author_avatar">
-                    <?php echo get_avatar(get_the_author_meta('ID'), 80); ?>
+                    <?php echo get_avatar( get_the_author_meta( 'ID' ), 80 ); ?>
                 </div>
                 <div class="wcp_author_details">
                     <h4><?php the_author(); ?></h4>
-                    <p><?php echo get_the_author_meta('description'); ?></p>
+                    <p><?php echo esc_html( get_the_author_meta( 'description' ) ); ?></p>
                 </div>
             </div>
 

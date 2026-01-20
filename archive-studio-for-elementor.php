@@ -6,7 +6,7 @@
  * Author: Rashed Khan
  * Tested up to: 6.9
  * Requires PHP: 7.4
- * Version: 1.0.3
+ * Version: 1.0.4
  * Text Domain: archive-studio-for-elementor
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -25,14 +25,14 @@ if ( ! is_plugin_active( 'elementor/elementor.php' ) ) {
     deactivate_plugins( plugin_basename( __FILE__ ) );
     add_action( 'admin_notices', function() {
         echo '<div class="notice notice-error is-dismissible">';
-        echo '<p><strong>Archive Studio Elementor:</strong> This plugin cannot be installed because <a href="https://wordpress.org/plugins/elementor/" target="_blank">Elementor</a> is not active. This plugin has been deactivated.</p>';
+        echo '<p><strong>' . esc_html__( 'Archive Studio Elementor:', 'archive-studio-for-elementor' ) . '</strong> ' . esc_html__( 'This plugin cannot be installed because', 'archive-studio-for-elementor' ) . ' <a href="https://wordpress.org/plugins/elementor/" target="_blank">Elementor</a> ' . esc_html__( 'is not active. This plugin has been deactivated.', 'archive-studio-for-elementor' ) . '</p>';
         echo '</div>';
     } );
     return;
 }
 
 
-class wpcft_elementor_archive_studio {
+class archive_studio_for_elementor {
 
     public function __construct() {
         new class_archive_dashboard();
@@ -49,7 +49,7 @@ class wpcft_elementor_archive_studio {
         if ( ! did_action( 'elementor/loaded' ) ) {
             add_action( 'admin_notices', function() {
                 if ( current_user_can( 'activate_plugins' ) ) {
-                    echo '<div class="notice notice-warning"><p><strong>Elementor Archive Widget:</strong> This plugin requires <a href="https://wordpress.org/plugins/elementor/" target="_blank">Elementor</a> to be installed and active.</p></div>';
+                    echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'Elementor Archive Widget:', 'archive-studio-for-elementor' ) . '</strong> ' . esc_html__( 'This plugin requires', 'archive-studio-for-elementor' ) . ' <a href="https://wordpress.org/plugins/elementor/" target="_blank">Elementor</a> ' . esc_html__( 'to be installed and active.', 'archive-studio-for-elementor' ) . '</p></div>';
                 }
             });
             return false;
@@ -67,18 +67,17 @@ class wpcft_elementor_archive_studio {
         }
         require_once __DIR__ . '/includes/class-archive-widget.php';
         // Register widget
-        $widgets_manager->register( new \archstel_Archive_Studio() );
+        $widgets_manager->register( new \Alass_Archive_Widget() );
     }
 
     /**
      * Enqueue plugin CSS & JS
      */
     public function archstel_enqueue_assets() {
-
-        wp_enqueue_style('eaw-style', plugin_dir_url( __FILE__ ) . 'assets/css/style.css', array(), time(), false );
-        wp_enqueue_style('single-style', plugin_dir_url( __FILE__ ) . 'assets/css/single_page.css', array(), time(), false);
-        wp_register_script( 'eaw-script', plugin_dir_url( __FILE__ ) . 'assets/js/script.js', array('jquery'), time(), true);
-       
+        $version = defined( 'WP_DEBUG' ) && WP_DEBUG ? time() : '1.0.3';
+        wp_enqueue_style('eaw-style', plugin_dir_url( __FILE__ ) . 'assets/css/style.css', array(), $version, false );
+        wp_enqueue_style('single-style', plugin_dir_url( __FILE__ ) . 'assets/css/single_page.css', array(), $version, false );
+        wp_register_script( 'eaw-script', plugin_dir_url( __FILE__ ) . 'assets/js/script.js', array('jquery'), $version, true);
     }
 
     public function archstel_event_organizer_template_include( $template ) {
@@ -100,4 +99,4 @@ class wpcft_elementor_archive_studio {
 }
 
 // Initialize the plugin
-new wpcft_elementor_archive_studio();
+new archive_studio_for_elementor();
