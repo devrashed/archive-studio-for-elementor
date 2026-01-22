@@ -4,12 +4,14 @@
  * Description: Elementor widget to design archive pages with Grid, Masonry, Portrait layout and more design. Just install and Ready-to-USE.
  * Requires at least: 5.4
  * Author: Rashed Khan
+ * Requires Plugins: elementor
  * Tested up to: 6.9
  * Requires PHP: 7.4
  * Version: 1.0.4
  * Text Domain: archive-studio-for-elementor
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * 
  */
 
 
@@ -67,7 +69,7 @@ class archive_studio_for_elementor {
         }
         require_once __DIR__ . '/includes/class-archive-widget.php';
         // Register widget
-        $widgets_manager->register( new \Alass_Archive_Widget() );
+        $widgets_manager->register( new \Class_Archive_Widget() );
     }
 
     /**

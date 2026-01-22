@@ -4,12 +4,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 
-if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
+if ( ! class_exists( 'Class_Archive_Widget' ) ) {
 
-    class Alass_Archive_Widget extends Widget_Base {
+    class Class_Archive_Widget extends Widget_Base {
 
         public function get_name() {
-            return 'Alass_Archive_Widget';
+            return 'Class_Archive_Widget';
         }
 
         public function get_title() {
@@ -353,7 +353,7 @@ if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
                 $columns = intval( $settings['columns'] );
                 $gap = intval( $settings['gap'] );
                 $rowgap = intval( $settings['row_gap'] );
-                $page = esc_attr( $settings['pageination_style'] );
+                $page = esc_attr( strtolower( $settings['pageination_style'] ) );
                 $wordlength = intval( $settings['excerpt_length'] );
                 $meta_cate = esc_attr( $settings['meta_category'] );
                 $meta_date = esc_attr( $settings['meta_date'] );
@@ -363,7 +363,6 @@ if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
                 if( 'grid' === $layout) {
 
                     echo '<div class="wf-archive-grid" data-columns="' . $columns . '" style="--eaw-gap:' . $columns . 'px;">';
-
                     while ( $query->have_posts() ) {
                         $query->the_post();
                         ?>
@@ -387,11 +386,11 @@ if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
                                     </span>   
                                      <?php endif; if ( 'yes' === $meta_date ) : ?>  
                                     <span class="wf-archive-date">
-                                        <?php echo get_the_date(); ?> 
+                                        <?php echo esc_html(get_the_date()); ?>
                                     </span>  
                                     <?php endif; ?>
                                     <?php if ( 'yes' === $mata_author ) : ?>      
-                                    <span class="author"><?php the_author(); ?></span>
+                                    <span class="author"><?php echo esc_html( get_the_author() ); ?></span>
                                      <?php endif; ?>     
                                 </div>
 
@@ -448,9 +447,9 @@ if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
                                 <h3 class="wf-archive-card-title"> <a href="<?php the_permalink(); ?>"> <?php the_title(); ?></a> </h3>
                                 <div class="wf-archive-card-meta">
                                   <?php if ( 'yes' === $mata_author ) : ?>   
-                                    <span class="author"><?php the_author(); ?></span>
+                                    <span class="author"><?php echo esc_html( get_the_author() ); ?></span>
                                   <?php endif; if ( 'yes' === $meta_date ) : ?>   
-                                    <span class="date"><?php echo get_the_date(); ?> </span>
+                                    <span class="date"><?php echo esc_html( get_the_date() ); ?> </span>
                                     <?php endif; ?>
                                 </div>
 
@@ -484,7 +483,7 @@ if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
                                  <?php if ( 'yes' === $mata_author ) : ?> 
                                     <span class="wf-author"><?php the_author(); ?></span>
                                     <?php endif; if ( 'yes' === $meta_date ) : ?>       
-                                    <span class="wf-date"><?php echo get_the_date(); ?> </span>
+                                    <span class="wf-date"><?php echo esc_html( get_the_date() ); ?> </span>
                                     <?php endif; ?>
                                 </div>
 
@@ -552,7 +551,7 @@ if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
                                         </h3>
 
                                         <div class="wf-post-meta">
-                                            <?php echo get_the_date(); ?> • <?php the_author(); ?>
+                                            <?php echo esc_html( get_the_date() ); ?> • <?php the_author(); ?>
                                         </div>
 
                                         <div class="wf-post-excerpt">
@@ -572,74 +571,9 @@ if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
 
                 } // end layout types   
 
-                
-                // Basic pagination (if not within main loop)
-                /* if ( 'numeric' === $page ) {
+        
 
-                        $big = 999999999;
-                        echo '<div class="eaw-pagination">';
-                        echo paginate_links( array(
-                            'base' => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
-                            'format' => '?paged=%#%',
-                            'current' => max( 1, $paged ),
-                            'total' => $query->max_num_pages
-                        ) );
-                        echo '</div>';
-
-                    } elseif ( 'nextprevious' === $page ) {
-                        
-                    // Next / Previous Pagination (No Numbers)
-                        echo '<div class="eaw-pagination eaw-prev-next">';
-                        $prev_link = get_previous_posts_link(__('« Previous', 'eaw'));
-                        $next_link = get_next_posts_link(__('Next »', 'eaw'), $query->max_num_pages);
-                        if ( $prev_link ) {
-                            echo '<span class="eaw-prev">' . $prev_link . '</span>';
-                        }
-                        if ( $next_link ) {
-                            echo '<span class="eaw-next">' . $next_link . '</span>';
-                        }
-                        echo '</div>';
-
-                    } elseif ( 'Load' === $page){
-                        // Load More pagination (NO AJAX)
-                        $total_pages = $query->max_num_pages;
-                        echo '<div class="eaw-load-more">';
-                        if ( $paged < $total_pages ) {
-                            $next_page_url = get_pagenum_link( $paged + 1 );
-                            echo '<a href="' . esc_url($next_page_url) . '" class="eaw-loadmore-btn">Load More</a>';
-                        }
-                        echo '</div>';
-
-                    } elseif ('select' === $page ){
-
-                        // Select Dropdown Pagination
-                        $total_pages = $query->max_num_pages;
-                        if ( $total_pages > 1 ) {
-                            echo '<div class="eaw-select-pagination">';
-                            echo '<select onchange="if (this.value) window.location.href=this.value">';
-                            for ( $i = 1; $i <= $total_pages; $i++ ) {
-                                $page_url = get_pagenum_link( $i );
-                                $selected = ( $i == $paged ) ? ' selected' : '';
-                                echo '<option value="' . esc_url( $page_url ) . '"' . $selected . '>' . sprintf( __( 'Page %d', 'eaw' ), $i ) . '</option>';
-                            }
-                            echo '</select>';
-                            echo '</div>';
-                        }
-                        
-                    } elseif ('infinite' === $page ){
-                        // Infinite Scroll Pagination (Basic Implementation)
-                        $total_pages = $query->max_num_pages;
-                        if ( $paged < $total_pages ) {
-                            $next_page_url = get_pagenum_link( $paged + 1 );
-                            echo '<div class="eaw-infinite-scroll" data-next-page="' . esc_url($next_page_url) . '">';
-                            echo '<span class="eaw-loading-message">Scroll down to load more...</span>';
-                            echo '</div>';
-                        }
-                    }
-
-                wp_reset_postdata(); */
-
-                if ( 'numeric' === $page ) {
+            if ( 'numeric' === $page ) {
 
                     $big = 999999999;
 
@@ -651,28 +585,24 @@ if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
                                 'format'    => '?paged=%#%',
                                 'current'   => absint( $paged ),
                                 'total'     => absint( $query->max_num_pages ),
-                                'prev_text' => esc_html__( '« Previous', 'eaw' ),
-                                'next_text' => esc_html__( 'Next »', 'eaw' ),
+                                'prev_text' => esc_html__( '« Previous', 'archive-studio-for-elementor' ),
+                                'next_text' => esc_html__( 'Next »', 'archive-studio-for-elementor' ),
                             )
                         )
                     );
                     echo '</div>';
 
                 } elseif ( 'nextprevious' === $page ) {
-
+                    
                     echo '<div class="eaw-pagination eaw-prev-next">';
-
-                    $prev_link = get_previous_posts_link( esc_html__( '« Previous', 'eaw' ) );
-                    $next_link = get_next_posts_link( esc_html__( 'Next »', 'eaw' ), $query->max_num_pages );
-
+                    $prev_link = get_previous_posts_link(__('« Previous', 'archive-studio-for-elementor'));
+                    $next_link = get_next_posts_link(__('Next »', 'archive-studio-for-elementor'), $query->max_num_pages);
                     if ( $prev_link ) {
-                        echo '<span class="eaw-prev">' . wp_kses_post( $prev_link ) . '</span>';
+                        echo '<span class="eaw-prev">' . $prev_link . '</span>';
                     }
-
                     if ( $next_link ) {
-                        echo '<span class="eaw-next">' . wp_kses_post( $next_link ) . '</span>';
+                        echo '<span class="eaw-next">' . $next_link . '</span>';
                     }
-
                     echo '</div>';
 
                 } elseif ( 'load' === $page ) {
@@ -682,31 +612,34 @@ if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
                     if ( $paged < $total_pages ) {
                         echo '<div class="eaw-load-more">';
                         echo '<a class="eaw-loadmore-btn" href="' . esc_url( get_pagenum_link( $paged + 1 ) ) . '">';
-                        echo esc_html__( 'Load More', 'eaw' );
+                        echo esc_html__( 'Load More', 'archive-studio-for-elementor' );
                         echo '</a>';
                         echo '</div>';
                     }
 
                 } elseif ( 'select' === $page ) {
+                   
+                   $total_pages = (int) $query->max_num_pages;
+                   if ( $total_pages > 1 ) {
 
-                    $total_pages = absint( $query->max_num_pages );
+                    echo '<div class="eaw-select-pagination">';
+                    echo '<select onchange="if ( this.value ) { window.location.href = this.value; }">';
 
-                    if ( $total_pages > 1 ) {
-                        echo '<div class="eaw-select-pagination">';
-                        echo '<select class="eaw-page-select">';
+                    for ( $i = 1; $i <= $total_pages; $i++ ) {
 
-                        for ( $i = 1; $i <= $total_pages; $i++ ) {
-                            printf(
-                                '<option value="%s"%s>%s</option>',
-                                esc_url( get_pagenum_link( $i ) ),
-                                selected( $paged, $i, false ),
-                                esc_html( sprintf( __( 'Page %d', 'eaw' ), $i ) )
-                            );
-                        }
+                        $page_url = get_pagenum_link( $i );
 
-                        echo '</select>';
-                        echo '</div>';
+                        printf(
+                            '<option value="%1$s"%2$s>%3$s</option>',
+                            esc_url( $page_url ),
+                            selected( $i, $paged, false ),
+                            sprintf(esc_html__( 'Page %d', 'archive-studio-for-elementor' ),$i )
+                        );
                     }
+
+                    echo '</select>';
+                    echo '</div>';
+                }
 
                 } elseif ( 'infinite' === $page ) {
 
@@ -715,7 +648,7 @@ if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
                     if ( $paged < $total_pages ) {
                         echo '<div class="eaw-infinite-scroll" data-next-page="' . esc_url( get_pagenum_link( $paged + 1 ) ) . '">';
                         echo '<span class="eaw-loading-message">';
-                        echo esc_html__( 'Scroll down to load more...', 'eaw' );
+                        echo esc_html__( 'Scroll down to load more...', 'archive-studio-for-elementor' );
                         echo '</span>';
                         echo '</div>';
                     }
@@ -725,7 +658,7 @@ if ( ! class_exists( 'Alass_Archive_Widget' ) ) {
 
 
             } else {
-                echo '<p>' . __( 'No posts found.', 'archive-studio-for-elementor' ) . '</p>';
+                echo '<p>' . esc_html__( 'No posts found.', 'archive-studio-for-elementor' ) . '</p>';
             }
         }
 

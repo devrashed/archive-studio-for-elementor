@@ -25,13 +25,10 @@ Class class_archive_dashboard {
 
         // Save settings
     
-            if ( isset($_POST['layout_option']) ) {
-                update_option(
-                    'layout_option',
-                    sanitize_text_field( wp_unslash( $_POST['layout_option'] ) )
-                );
-
-            }
+           if ( isset( $_POST['layout_option'] ) ) {
+                $layout_option = sanitize_text_field( wp_unslash( $_POST['layout_option'] ) );
+                update_option( 'layout_option', $layout_option );
+              }
 
         $selected = get_option('layout_option', true);
         ?>
@@ -40,9 +37,7 @@ Class class_archive_dashboard {
             <h1>Grid Radio Button Settings</h1>
 
             <form method="post">
-
                 <div class="layout-grid">
-
                     <label class="layout-card <?php echo ($selected == 'layout_1') ? 'selected' : ''; ?>">
                         <input type="radio" name="layout_option" value="layout_1"
                             <?php checked($selected, 'layout_1'); ?>>
@@ -58,12 +53,7 @@ Class class_archive_dashboard {
                     </label>
                 </div>
                 <?php submit_button('Save Settings', 'primary', 'layout_submit'); ?>
-
             </form>
-
-            <script>
-               
-            </script>
         </div>
 
        <?php
