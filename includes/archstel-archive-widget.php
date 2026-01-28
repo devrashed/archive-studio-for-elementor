@@ -4,12 +4,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 
-if ( ! class_exists( 'Class_Archive_Widget' ) ) {
+if ( ! class_exists( 'archstel_archive_widget' ) ) {
 
-    class Class_Archive_Widget extends Widget_Base {
+    class archstel_archive_widget extends Widget_Base {
 
         public function get_name() {
-            return 'Class_Archive_Widget';
+            return 'archstel_archive_widget';
         }
 
         public function get_title() {

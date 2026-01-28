@@ -7,7 +7,7 @@
  * Requires Plugins: elementor
  * Tested up to: 6.9
  * Requires PHP: 7.4
- * Version: 1.0.4
+ * Version: 1.0.1
  * Text Domain: archive-studio-for-elementor
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require_once plugin_dir_path( __FILE__ ) . 'includes/class_archive_dashboard.php';
+require_once plugin_dir_path( __FILE__ ) . 'includes/archstel-archive-dashboard.php';
 
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
@@ -34,10 +34,10 @@ if ( ! is_plugin_active( 'elementor/elementor.php' ) ) {
 }
 
 
-class archive_studio_for_elementor {
+class archstel_archive_studio_for_elementor {
 
     public function __construct() {
-        new class_archive_dashboard();
+        new archstel_archive_dashboard();
         add_action( 'plugins_loaded', [ $this, 'archstel_check_elementor' ] );
         add_action( 'elementor/widgets/register', [ $this, 'archstel_register_widget' ] );
         add_action( 'wp_enqueue_scripts', [ $this, 'archstel_enqueue_assets' ] );
@@ -67,9 +67,9 @@ class archive_studio_for_elementor {
         if ( ! $this->archstel_check_elementor() ) {
             return;
         }
-        require_once __DIR__ . '/includes/class-archive-widget.php';
+        require_once __DIR__ . '/includes/archstel-archive-widget.php';
         // Register widget
-        $widgets_manager->register( new \Class_Archive_Widget() );
+        $widgets_manager->register( new \archstel_archive_widget() );
     }
 
     /**
@@ -101,4 +101,4 @@ class archive_studio_for_elementor {
 }
 
 // Initialize the plugin
-new archive_studio_for_elementor();
+new archstel_archive_studio_for_elementor();
